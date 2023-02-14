@@ -35,8 +35,8 @@ public class NamiBridge {
         }
     }
 
-    public static void launch(Activity context) {
-        NamiCampaignManager.launch(context, "penguin", new Function2<NamiPaywallAction, String, Unit>() {
+    public static void launch(Activity context, String label) {
+        NamiCampaignManager.launch(context, label, new Function2<NamiPaywallAction, String, Unit>() {
             @Override
             public Unit invoke(NamiPaywallAction namiPaywallAction, String s) {
                 return null;

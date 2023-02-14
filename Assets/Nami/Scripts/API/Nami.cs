@@ -9,18 +9,10 @@ namespace NamiSdk
     {
         public static void Init(NamiConfiguration configuration)
         {
-            JniToolkitUtils.RunOnUiThread((() =>
+            JniToolkitUtils.RunOnUiThread(() =>
             {
-                "com.namiml.Nami".AJCCallStaticOnce("configure", configuration.AJO);
-            }));
-        }
-
-        public static void Launch()
-        {
-            JniToolkitUtils.RunOnUiThread((() =>
-            { 
-                "com.namiml.unity.NamiBridge".AJCCallStaticOnce("launch", JniToolkitUtils.Activity);
-            }));
+                APIPath.Nami.AJCCallStaticOnce("configure", configuration.AJO);
+            });
         }
     }
 }

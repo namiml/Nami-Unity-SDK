@@ -56,6 +56,12 @@ namespace NamiSdk
                 return this;
             }
 
+            public Builder NamiLanguageCode(NamiLanguageCode namiLanguageCode)
+            {
+                this.namiLanguageCode = namiLanguageCode;
+                return this;
+            }
+
             public NamiConfiguration Build()
             {
                 return new NamiConfiguration(appPlatformId, logLevel, settingsList, developmentMode, bypassStore, namiLanguageCode);
@@ -66,10 +72,13 @@ namespace NamiSdk
         {
             get
             {
-                var ajo = new AndroidJavaObject("com.namiml.NamiConfiguration$Builder", JniToolkitUtils.Activity, appPlatformId);
+                var ajo = new AndroidJavaObject(APIPath.NamiConfiguration + "$Builder", JniToolkitUtils.Activity, appPlatformId);
                 ajo.CallAJO("bypassStore", bypassStore);
+                ajo.CallAJO("developmentMode", developmentMode);
                 // TODO figure out log level enum
-                "com.namiml.unity.NamiBridge".AJCCallStaticOnce("setSettingsListHack", ajo);
+                // ajo.CallAJO("logLevel", logLevel);
+                // ajo.CallAJO("namiLanguageCode", namiLanguageCode);
+                APIPath.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
                 return ajo.CallAJO("build");
             }
         }

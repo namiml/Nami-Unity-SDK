@@ -10,8 +10,8 @@ public class NamiExample : MonoBehaviour
         Nami.Init(new NamiConfiguration.Builder(appPlatformId).Build());
     }
 
-    public void Launch()
+    public void Launch(string label)
     {
-        Nami.Launch();
+        NamiCampaignManager.Launch(label);
     }
 }

@@ -52,7 +52,7 @@ public class NamiBridge {
                 }
                 else if (launchCampaignResult instanceof LaunchCampaignResult.Failure) {
                     Log.d("Unity", "JAVA: ----------------------------> onFailure");
-                    launchListener.onFailure(((LaunchCampaignResult.Failure) launchCampaignResult).getError().toString());
+                    launchListener.onFailure(((LaunchCampaignResult.Failure) launchCampaignResult).getError());
                 } else if (launchCampaignResult instanceof LaunchCampaignResult.PurchaseChanged) {
                     Log.d("Unity", "JAVA: ----------------------------> PurchaseChanged");
                     LaunchCampaignResult.PurchaseChanged result = (LaunchCampaignResult.PurchaseChanged) launchCampaignResult;

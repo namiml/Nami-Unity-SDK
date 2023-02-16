@@ -11,10 +11,10 @@ namespace NamiSdk.Proxy
     {
         private readonly Action<NamiPaywallAction, string> _paywallActionCallback;
         private readonly Action _onLaunchSuccessCallback;
-        private readonly Action<string> _onLaunchFailureCallback;
+        private readonly Action<LaunchCampaignError> _onLaunchFailureCallback;
         private readonly Action<NamiPurchaseState, List<NamiPurchase>, string> _onLaunchPurchaseChangedCallback;
 
-        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, string> paywallActionCallback, Action onLaunchSuccessCallback, Action<string> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
+        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, string> paywallActionCallback, Action onLaunchSuccessCallback, Action<LaunchCampaignError> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
         {
             _paywallActionCallback = paywallActionCallback;
             _onLaunchSuccessCallback = onLaunchSuccessCallback;
@@ -43,12 +43,12 @@ namespace NamiSdk.Proxy
         }
 
         [UsedImplicitly]
-        void onFailure(string error)
+        void onFailure(AndroidJavaObject error)
         {
             if (_onLaunchFailureCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _onLaunchFailureCallback(error);
+                _onLaunchFailureCallback(error.JavaToEnum<LaunchCampaignError>("_"));
             });
         }
 

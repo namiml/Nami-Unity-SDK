@@ -11,7 +11,7 @@ namespace NamiSdk
         {
             JniToolkitUtils.RunOnUiThread(() =>
             {
-                APIPath.Nami.AJCCallStaticOnce("configure", configuration.AJO);
+                JavaClassNames.Nami.AJCCallStaticOnce("configure", configuration.AJO);
             });
         }
     }

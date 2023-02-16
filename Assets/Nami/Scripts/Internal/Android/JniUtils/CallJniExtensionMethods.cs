@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace NamiSdk.JNI
 {
@@ -26,7 +27,13 @@ namespace NamiSdk.JNI
 
 		public static string JavaToString(this AndroidJavaObject ajo)
 		{
-			return ajo.Call<string>("toString");
+			return ajo.IsJavaNull() ? null : ajo.Call<string>("toString");
+		}
+
+		public static TEnum JavaToEnum<TEnum>(this AndroidJavaObject ajo) where TEnum : struct
+		{
+			Enum.TryParse<TEnum>(ajo.JavaToString(), true, out var result);
+			return result;
 		}
 
 		#region AndroidJavaObject_Call_Proxy

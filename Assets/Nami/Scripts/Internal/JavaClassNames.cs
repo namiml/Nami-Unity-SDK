@@ -1,6 +1,6 @@
 namespace NamiSdk
 {
-    public class APIPath
+    public class JavaClassNames
     {
         public static readonly string Nami = "com.namiml.Nami";
         public static readonly string NamiConfiguration = "com.namiml.NamiConfiguration";

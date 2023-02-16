@@ -72,13 +72,13 @@ namespace NamiSdk
         {
             get
             {
-                var ajo = new AndroidJavaObject(APIPath.NamiConfiguration + "$Builder", JniToolkitUtils.Activity, appPlatformId);
+                var ajo = new AndroidJavaObject(JavaClassNames.NamiConfiguration + "$Builder", JniToolkitUtils.Activity, appPlatformId);
                 ajo.CallAJO("bypassStore", bypassStore);
                 ajo.CallAJO("developmentMode", developmentMode);
                 // TODO figure out log level enum
                 // ajo.CallAJO("logLevel", logLevel);
                 // ajo.CallAJO("namiLanguageCode", namiLanguageCode);
-                APIPath.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
                 return ajo.CallAJO("build");
             }
         }

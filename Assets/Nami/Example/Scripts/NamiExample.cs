@@ -21,7 +21,7 @@ public class NamiExample : MonoBehaviour
         }, error =>
         {
             Debug.Log("----------------------------> onFailure : Queue" + "Error:" + error);
-        }, (purchaseState, list, error) =>
+        }, (purchaseState, activePurchases, error) =>
         {
             Debug.Log("----------------------------> onPurchaseChanged : Queue" + "NamiPurchaseState:" + purchaseState);
         });

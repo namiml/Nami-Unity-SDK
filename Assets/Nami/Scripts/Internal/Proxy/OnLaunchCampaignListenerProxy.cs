@@ -9,14 +9,12 @@ namespace NamiSdk.Proxy
 {
     public class OnLaunchCampaignListenerProxy : AndroidJavaProxy
     {
-        // TODO implement NamiPurchase for the list in onPurchaseChanged function
-
         private readonly Action<NamiPaywallAction, string> _paywallActionCallback;
         private readonly Action _onLaunchSuccessCallback;
         private readonly Action<string> _onLaunchFailureCallback;
-        private readonly Action<NamiPurchaseState, List<string>, string> _onLaunchPurchaseChangedCallback;
+        private readonly Action<NamiPurchaseState, List<NamiPurchase>, string> _onLaunchPurchaseChangedCallback;
 
-        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, string> paywallActionCallback, Action onLaunchSuccessCallback, Action<string> onLaunchFailureCallback, Action<NamiPurchaseState, List<string>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
+        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, string> paywallActionCallback, Action onLaunchSuccessCallback, Action<string> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
         {
             _paywallActionCallback = paywallActionCallback;
             _onLaunchSuccessCallback = onLaunchSuccessCallback;
@@ -55,12 +53,12 @@ namespace NamiSdk.Proxy
         }
 
         [UsedImplicitly]
-        void onPurchaseChanged(AndroidJavaObject purchaseState, /* List<NamiPurchase> */ AndroidJavaObject activePurchases, string errorMsg)
+        void onPurchaseChanged(AndroidJavaObject purchaseState, AndroidJavaObject activePurchases, string errorMsg)
         {
             if (_onLaunchPurchaseChangedCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _onLaunchPurchaseChangedCallback(purchaseState.JavaToEnum<NamiPurchaseState>(), null, errorMsg);
+                _onLaunchPurchaseChangedCallback(purchaseState.JavaToEnum<NamiPurchaseState>(), NamiPurchase.ExtractFromJavaList(activePurchases), errorMsg);
             });
         }
     }

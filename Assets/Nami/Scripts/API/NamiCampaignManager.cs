@@ -7,7 +7,7 @@ namespace NamiSdk
 {
     public class NamiCampaignManager
     {
-        public static void Launch(string label, Action<NamiPaywallAction, string> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<string> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<string>, string> onLaunchPurchaseChangedCallback = null)
+        public static void Launch(string label, Action<NamiPaywallAction, string> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<string> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback = null)
         {
             JniToolkitUtils.RunOnUiThread(() =>
             {

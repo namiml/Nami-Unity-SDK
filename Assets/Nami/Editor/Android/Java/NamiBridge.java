@@ -17,11 +17,9 @@ import java.util.List;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
-import com.unity3d.player.UnityPlayer;
 
 public class NamiBridge {
     public static void setSettingsListHack(NamiConfiguration.Builder builder) {
-        builder.logLevel(NamiLogLevel.DEBUG);
         List<String> settings = new ArrayList<>();
         settings.add("useStagingAPI");
 
@@ -40,7 +38,7 @@ public class NamiBridge {
         NamiCampaignManager.launch(context, label, new Function2<NamiPaywallAction, String, Unit>() {
             @Override
             public Unit invoke(NamiPaywallAction namiPaywallAction, String skuId) {
-                Log.d("Unity", "JAVA: ----------------------------> namiPaywallAction Invoke");
+                Log.d("Unity", "JAVA: ----------------------------> namiPaywallAction Invoke: " + "NamiPaywallAction:" + namiPaywallAction.toString());
                 launchListener.onNamiPaywallAction(namiPaywallAction, skuId);
                 return null;
             }

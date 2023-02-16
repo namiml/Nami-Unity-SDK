@@ -2,9 +2,9 @@ namespace NamiSdk
 {
     public enum NamiLogLevel
     {
-        ERROR,
-        WARN,
-        INFO,
-        DEBUG
+        Error,
+        Warn,
+        Info,
+        Debug
     }
 }

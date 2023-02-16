@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NamiSdk.Android;
 using NamiSdk.JNI;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace NamiSdk.Proxy
 {
     public class OnLaunchCampaignListenerProxy : AndroidJavaProxy
     {
+        // TODO implement NamiPurchase for the list in onPurchaseChanged function
+
         private readonly Action<NamiPaywallAction, string> _paywallActionCallback;
         private readonly Action _onLaunchSuccessCallback;
         private readonly Action<string> _onLaunchFailureCallback;
@@ -22,25 +25,21 @@ namespace NamiSdk.Proxy
         }
 
         [UsedImplicitly]
-        void onNamiPaywallAction(/* NamiPaywallAction */ AndroidJavaObject namiPaywallAction, AndroidJavaObject skuId)
+        void onNamiPaywallAction(AndroidJavaObject namiPaywallAction, AndroidJavaObject skuId)
         {
-            var convertedNamiPaywallAction = namiPaywallAction.JavaToEnum<NamiPaywallAction>();
-            var convertedSkuId = skuId.JavaToString();
-            Debug.Log("----------------------------> onNamiPaywallAction - " + "Enum: " + convertedNamiPaywallAction);
+            if (_paywallActionCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                Debug.Log("----------------------------> onNamiPaywallAction : Queue");
-                _paywallActionCallback(convertedNamiPaywallAction, convertedSkuId);
+                _paywallActionCallback(namiPaywallAction.JavaToEnum<NamiPaywallAction>("NAMI", "_"), skuId.JavaToString());
             });
         }
 
         [UsedImplicitly]
         void onSuccess()
         {
-            Debug.Log("----------------------------> onSuccess");
+            if (_onLaunchSuccessCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                Debug.Log("----------------------------> onSuccess : Queue");
                 _onLaunchSuccessCallback();
             });
         }
@@ -48,22 +47,20 @@ namespace NamiSdk.Proxy
         [UsedImplicitly]
         void onFailure(string error)
         {
-            Debug.Log("----------------------------> onFailure");
+            if (_onLaunchFailureCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                Debug.Log("----------------------------> onFailure : Queue");
                 _onLaunchFailureCallback(error);
             });
         }
 
         [UsedImplicitly]
-        void onPurchaseChanged(/* NamiPurchaseState */ AndroidJavaObject purchaseState, /* List<NamiPurchase> */ AndroidJavaObject activePurchases, string errorMsg)
+        void onPurchaseChanged(AndroidJavaObject purchaseState, /* List<NamiPurchase> */ AndroidJavaObject activePurchases, string errorMsg)
         {
-            Debug.Log("----------------------------> onPurchaseChanged");
+            if (_onLaunchPurchaseChangedCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                Debug.Log("----------------------------> onPurchaseChanged : Queue");
-                //_onLaunchPurchaseChangedCallback(purchaseState, activePurchases, errorMsg);
+                _onLaunchPurchaseChangedCallback(purchaseState.JavaToEnum<NamiPurchaseState>(), null, errorMsg);
             });
         }
     }

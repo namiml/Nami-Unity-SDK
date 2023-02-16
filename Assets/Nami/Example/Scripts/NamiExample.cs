@@ -7,11 +7,23 @@ public class NamiExample : MonoBehaviour
 
     private void Start()
     {
-        Nami.Init(new NamiConfiguration.Builder(appPlatformId).Build());
+        Nami.Init(new NamiConfiguration.Builder(appPlatformId).LogLevel(NamiLogLevel.Debug).Build());
     }
 
     public void Launch(string label)
     {
-        NamiCampaignManager.Launch(label);
+        NamiCampaignManager.Launch(label, (paywallAction, s) =>
+        {
+            Debug.Log("----------------------------> onNamiPaywallAction : Queue" + "NamiPaywallAction:" + paywallAction);
+        }, () =>
+        {
+            Debug.Log("----------------------------> onSuccess : Queue");
+        }, error =>
+        {
+            Debug.Log("----------------------------> onFailure : Queue" + "Error:" + error);
+        }, (purchaseState, list, error) =>
+        {
+            Debug.Log("----------------------------> onPurchaseChanged : Queue" + "NamiPurchaseState:" + purchaseState);
+        });
     }
 }

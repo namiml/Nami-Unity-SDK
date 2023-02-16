@@ -2,10 +2,10 @@ namespace NamiSdk
 {
     public enum NamiPurchaseState
     {
-        PURCHASED,
-        FAILED,
-        CANCELLED,
-        PENDING,
-        UNKNOWN
+        Purchased,
+        Failed,
+        Cancelled,
+        Pending,
+        Unknown
     }
 }

@@ -7,7 +7,6 @@ namespace NamiSdk
 {
     public class NamiCampaignManager
     {
-        // TODO implement NamiError and NamiPurchase for onLaunchFailureCallback and onLaunchPurchaseChangedCallback
         public static void Launch(string label, Action<NamiPaywallAction, string> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<string> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<string>, string> onLaunchPurchaseChangedCallback = null)
         {
             JniToolkitUtils.RunOnUiThread(() =>

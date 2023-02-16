@@ -30,12 +30,6 @@ namespace NamiSdk.JNI
 			return ajo.IsJavaNull() ? null : ajo.Call<string>("toString");
 		}
 
-		public static TEnum JavaToEnum<TEnum>(this AndroidJavaObject ajo) where TEnum : struct
-		{
-			Enum.TryParse<TEnum>(ajo.JavaToString(), true, out var result);
-			return result;
-		}
-
 		#region AndroidJavaObject_Call_Proxy
 
 		public static string CallStr(this AndroidJavaObject ajo, string methodName, params object[] args)

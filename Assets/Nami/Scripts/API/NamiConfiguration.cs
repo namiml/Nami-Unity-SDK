@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using NamiSdk.Android;
 using NamiSdk.JNI;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ namespace NamiSdk
         public class Builder
         {
             private string appPlatformId;
-            private NamiLogLevel logLevel = NamiLogLevel.WARN;
+            private NamiLogLevel logLevel = NamiLogLevel.Warn;
             private List<string> settingsList;
             private bool developmentMode = false;
             private bool bypassStore = false;
@@ -75,9 +75,8 @@ namespace NamiSdk
                 var ajo = new AndroidJavaObject(JavaClassNames.NamiConfiguration + "$Builder", JniToolkitUtils.Activity, appPlatformId);
                 ajo.CallAJO("bypassStore", bypassStore);
                 ajo.CallAJO("developmentMode", developmentMode);
-                // TODO figure out log level enum
-                // ajo.CallAJO("logLevel", logLevel);
-                // ajo.CallAJO("namiLanguageCode", namiLanguageCode);
+                ajo.CallAJO("logLevel", logLevel.EnumToJava(JavaEnumNames.NamiLogLevel));
+                if (namiLanguageCode != null) ajo.CallAJO("namiLanguageCode", ((NamiLanguageCode)namiLanguageCode).EnumToJava(JavaEnumNames.NamiLanguageCode));
                 JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
                 return ajo.CallAJO("build");
             }

@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Nami/Example/Scenes/Demo.unity
+    guid: 12e90e18ac277d54899a6fa47f8ab932
   m_configObjects: {}

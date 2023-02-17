@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using NamiSdk.Android;
 using NamiSdk.JNI;
@@ -58,7 +59,8 @@ namespace NamiSdk.Proxy
             if (_onLaunchPurchaseChangedCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _onLaunchPurchaseChangedCallback(purchaseState.JavaToEnum<NamiPurchaseState>(), NamiPurchase.ExtractFromJavaList(activePurchases), errorMsg);
+                var activePurchasesList = activePurchases.FromJavaList<AndroidJavaObject>().Select(ajo => new NamiPurchase(ajo)).ToList();
+                _onLaunchPurchaseChangedCallback(purchaseState.JavaToEnum<NamiPurchaseState>(), activePurchasesList, errorMsg);
             });
         }
     }

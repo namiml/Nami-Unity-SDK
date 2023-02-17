@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using NamiSdk.JNI;
-using UnityEngine;
+using NamiSdk.Interfaces;
 
 namespace NamiSdk
 {
-    public class Nami
+    public static class Nami
     {
+        private static readonly INami Impl;
+
+        static Nami()
+        {
+#if UNITY_EDITOR || UNITY_STANDALONE
+            Impl = new NamiUnityEditor();
+#elif UNITY_ANDROID
+            Impl = new NamiAndroid();
+#elif UNITY_IOS
+			Impl = new NamiIOS();
+#endif
+        }
+
         public static void Init(NamiConfiguration configuration)
         {
-            JniToolkitUtils.RunOnUiThread(() =>
-            {
-                JavaClassNames.Nami.AJCCallStaticOnce("configure", configuration.AJO);
-            });
+            Impl.Init(configuration);
         }
     }
 }

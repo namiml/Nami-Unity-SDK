@@ -4,7 +4,7 @@ using NamiSdk.Interfaces;
 using NamiSdk.JNI;
 using NamiSdk.Proxy;
 
-namespace NamiSdk
+namespace NamiSdk.Implementation
 {
     public class NamiCampaignManagerAndroid : INamiCampaignManager
     {

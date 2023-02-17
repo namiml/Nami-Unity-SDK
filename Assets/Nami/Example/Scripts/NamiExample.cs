@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using NamiSdk;
 using UnityEngine;
 
@@ -8,10 +11,38 @@ public class NamiExample : MonoBehaviour
     private void Start()
     {
         Nami.Init(new NamiConfiguration.Builder(appPlatformId).LogLevel(NamiLogLevel.Debug).Build());
+        NamiCustomerManager.RegisterAccountStateHandler((accountStateAction, success, error) =>
+        {
+            if (success)
+            {
+                Debug.Log("----------------------------> " + accountStateAction);
+            }
+            else
+            {
+                Debug.Log("----------------------------> accountStateAction Error: " + error);
+            }
+        });
+    }
+
+    private static string sha256(string value)
+    {
+        using SHA256 hash = SHA256.Create();
+        return string.Concat(hash
+            .ComputeHash(Encoding.UTF8.GetBytes(value))
+            .Select(item => item.ToString("x2")));
     }
 
     public void Launch(string label)
     {
+        if (NamiCustomerManager.IsLoggedIn)
+        {
+            NamiCustomerManager.Logout();
+        }
+        else
+        {
+            NamiCustomerManager.Login(sha256("user-id"));
+        }
+
         NamiCampaignManager.Launch(label, (paywallAction, s) =>
         {
             Debug.Log("----------------------------> onNamiPaywallAction : Queue" + "NamiPaywallAction:" + paywallAction);

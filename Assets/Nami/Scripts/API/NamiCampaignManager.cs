@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NamiSdk.Implementation;
 using NamiSdk.Interfaces;
 
 namespace NamiSdk

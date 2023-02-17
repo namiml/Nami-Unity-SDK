@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NamiSdk.Interfaces;
 
-namespace NamiSdk
+namespace NamiSdk.Implementation
 {
     public class NamiCampaignManagerUnityEditor : INamiCampaignManager
     {

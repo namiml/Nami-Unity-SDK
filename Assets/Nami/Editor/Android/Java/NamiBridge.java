@@ -8,6 +8,7 @@ import com.namiml.NamiError;
 import com.namiml.NamiLogLevel;
 import com.namiml.campaign.LaunchCampaignResult;
 import com.namiml.campaign.NamiCampaignManager;
+import com.namiml.customer.NamiCustomerManager;
 import com.namiml.paywall.model.NamiPaywallAction;
 
 import java.lang.reflect.Field;
@@ -60,6 +61,20 @@ public class NamiBridge {
                 }
                 return null;
             }
+        });
+    }
+
+    public static void addRegisterListener(OnCustomerRegisterListener registerListener) {
+        Log.d("Unity", "JAVA: ----------------------------> register");
+        NamiCustomerManager.registerAccountStateHandler((accountStateAction, success, namiError) -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerAccountState");
+            registerListener.onRegisterAccountState(accountStateAction, success, namiError.getErrorMessage());
+            return null;
+        });
+        NamiCustomerManager.registerJourneyStateHandler((journeyState) -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
+            registerListener.onRegisterJourneyState(journeyState);
+            return null;
         });
     }
 }

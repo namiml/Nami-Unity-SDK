@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
-using NamiSdk.JNI;
 using UnityEngine;
 
-namespace NamiSdk.Android
+namespace NamiSdk.JNI
 {
-    public static class JavaConverter
+    public static class ConvertationUtils
     {
         /// <param name="ajo">AndroidJavaObject of java enum.</param>
         /// <param name="args">String arguments that will be ignoring in the java enum name.</param>

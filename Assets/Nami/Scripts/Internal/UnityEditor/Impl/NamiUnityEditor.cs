@@ -1,6 +1,6 @@
 using NamiSdk.Interfaces;
 
-namespace NamiSdk
+namespace NamiSdk.Implementation
 {
     public class NamiUnityEditor : INami
     {

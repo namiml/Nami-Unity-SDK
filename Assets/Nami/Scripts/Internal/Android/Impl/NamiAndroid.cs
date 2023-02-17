@@ -1,7 +1,7 @@
 using NamiSdk.Interfaces;
 using NamiSdk.JNI;
 
-namespace NamiSdk
+namespace NamiSdk.Implementation
 {
     public class NamiAndroid : INami
     {

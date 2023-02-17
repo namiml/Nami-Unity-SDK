@@ -143,6 +143,11 @@ namespace NamiSdk.JNI
 
 		#region Filed_Get_Proxy
 
+		public static bool GetBool(this AndroidJavaObject ajo, string fieldName)
+		{
+			return ajo.Get<bool>(fieldName);
+		}
+
 		public static float GetFloat(this AndroidJavaObject ajo, string fieldName)
 		{
 			return ajo.Get<float>(fieldName);

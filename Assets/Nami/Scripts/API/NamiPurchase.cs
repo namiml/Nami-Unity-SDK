@@ -1,5 +1,4 @@
 using System;
-using NamiSdk.Android;
 using NamiSdk.JNI;
 using UnityEngine;
 

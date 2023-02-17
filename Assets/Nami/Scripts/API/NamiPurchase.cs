@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using NamiSdk.Android;
 using NamiSdk.JNI;
 using UnityEngine;
@@ -9,56 +7,32 @@ namespace NamiSdk
 {
     public class NamiPurchase
     {
-       private readonly AndroidJavaObject _ajo;
+        public NamiPurchase(AndroidJavaObject ajo)
+        {
+            PurchaseInitiatedTimestamp = ajo.CallLong("getPurchaseInitiatedTimestamp");
+            Expires = ajo.CallAJO("getExpires").JavaToDateTime();
+            PurchaseSource = ajo.CallAJO("getPurchaseSource").JavaToEnum<NamiPurchaseSource>();
+            SkuId = ajo.CallStr("getSkuId");
+            SkuUUID = ajo.CallStr("getSkuUUID");
+            TransactionIdentifier = ajo.CallStr("getTransactionIdentifier");
+            PurchaseToken = ajo.CallStr("getPurchaseToken");
+            LocalizedDescription = ajo.CallStr("getLocalizedDescription");
+        }
 
-       private NamiPurchase(AndroidJavaObject ajo)
-       { 
-          this._ajo = ajo;
-       }
+        public long PurchaseInitiatedTimestamp { get; private set; }
 
-       public static List<NamiPurchase> ExtractFromJavaList(AndroidJavaObject ajoList)
-       { 
-          return ajoList.FromJavaList<AndroidJavaObject>().Select(ajo => new NamiPurchase(ajo)).ToList();
-       }
+        public DateTime Expires { get; private set; }
 
-       public long GetPurchaseInitiatedTimestamp()
-       {
-          return _ajo.CallLong("getPurchaseInitiatedTimestamp");
-       }
+        public NamiPurchaseSource PurchaseSource { get; private set; }
 
-       public DateTime GetExpires()
-       {
-          return _ajo.CallAJO("getExpires").JavaToDateTime();
-       }
+        public string SkuId { get; private set; }
 
-       public NamiPurchaseSource GetPurchaseSource()
-       {
-          return _ajo.CallAJO("getPurchaseSource").JavaToEnum<NamiPurchaseSource>();
-       }
+        public string SkuUUID { get; private set; }
 
-       public string GetSkuId()
-       {
-          return _ajo.CallStr("getSkuId");
-       }
+        public string TransactionIdentifier { get; private set; }
 
-       public string GetSkuUUID()
-       {
-          return _ajo.CallStr("getSkuUUID");
-       }
-       
-       public string GetTransactionIdentifier()
-       {
-          return _ajo.CallStr("getTransactionIdentifier");
-       }
-       
-       public string GetPurchaseToken()
-       {
-          return _ajo.CallStr("getPurchaseToken");
-       }
-       
-       public string GetLocalizedDescription()
-       {
-          return _ajo.CallStr("getLocalizedDescription");
-       }
+        public string PurchaseToken { get; private set; }
+
+        public string LocalizedDescription { get; private set; }
     }
 }

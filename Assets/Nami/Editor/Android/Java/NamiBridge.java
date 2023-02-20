@@ -9,6 +9,8 @@ import com.namiml.campaign.NamiCampaignManager;
 import com.namiml.customer.AccountStateAction;
 import com.namiml.customer.CustomerJourneyState;
 import com.namiml.customer.NamiCustomerManager;
+import com.namiml.entitlement.NamiEntitlement;
+import com.namiml.entitlement.NamiEntitlementManager;
 import com.namiml.paywall.model.NamiPaywallAction;
 
 import java.lang.reflect.Field;
@@ -80,6 +82,28 @@ public class NamiBridge {
             public Unit invoke(CustomerJourneyState journeyState) {
                 Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
                 registerListener.onRegisterJourneyState(journeyState);
+                return null;
+            }
+        });
+    }
+
+    public static void refresh(OnRefreshEntitlementsListener refreshListener){
+        NamiEntitlementManager.refresh(new Function1<List<NamiEntitlement>, Unit>() {
+            @Override
+            public Unit invoke(List<NamiEntitlement> entitlementsList) {
+                Log.d("Unity", "JAVA: ----------------------------> refresh");
+                refreshListener.onRefresh(entitlementsList);
+                return null;
+            }
+        });
+    }
+
+    public static void registerActiveEntitlementsHandler(OnRegisterActiveEntitlementsListener registerListener){
+        NamiEntitlementManager.registerActiveEntitlementsHandler(new Function1<List<NamiEntitlement>, Unit>() {
+            @Override
+            public Unit invoke(List<NamiEntitlement> activeEntitlements) {
+                Log.d("Unity", "JAVA: ----------------------------> activeEntitlementsCallback");
+                registerListener.onActiveEntitlementsCallback(activeEntitlements);
                 return null;
             }
         });

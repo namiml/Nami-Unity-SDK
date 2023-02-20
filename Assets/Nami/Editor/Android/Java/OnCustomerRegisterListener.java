@@ -1,10 +1,11 @@
 package com.namiml.unity;
 
-import com.namiml.NamiError;
 import com.namiml.customer.AccountStateAction;
 import com.namiml.customer.CustomerJourneyState;
 
+import java.lang.Boolean;
+
 public interface OnCustomerRegisterListener {
-    void onRegisterAccountState(AccountStateAction accountStateAction, boolean success, String error);
+    void onRegisterAccountState(AccountStateAction accountStateAction, Boolean success, String error);
     void onRegisterJourneyState(CustomerJourneyState journeyState);
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,17 +12,36 @@ public class NamiExample : MonoBehaviour
     private void Start()
     {
         Nami.Init(new NamiConfiguration.Builder(appPlatformId).LogLevel(NamiLogLevel.Debug).Build());
-        NamiCustomerManager.RegisterAccountStateHandler((accountStateAction, success, error) =>
+    }
+
+    public void Launch(string label)
+    {
+        NamiCampaignManager.Launch(label, (paywallAction, s) =>
         {
-            if (success)
-            {
-                Debug.Log("----------------------------> " + accountStateAction);
-            }
-            else
-            {
-                Debug.Log("----------------------------> accountStateAction Error: " + error);
-            }
+            Debug.Log("----------------------------> onNamiPaywallAction : Queue : " + "NamiPaywallAction:" + paywallAction);
+        }, () =>
+        {
+            Debug.Log("----------------------------> onSuccess : Queue");
+        }, error =>
+        {
+            Debug.Log("----------------------------> onFailure : Queue : " + "Error:" + error);
+        }, (purchaseState, activePurchases, error) =>
+        {
+            Debug.Log("----------------------------> onPurchaseChanged : Queue : " + "NamiPurchaseState:" + purchaseState);
         });
+    }
+
+    public void Login()
+    {
+        if (NamiCustomerManager.IsLoggedIn) return;
+        var uuid = Guid.NewGuid().ToString();
+        NamiCustomerManager.Login(uuid);
+    }
+
+    public void Logout()
+    {
+        if (!NamiCustomerManager.IsLoggedIn) return;
+        NamiCustomerManager.Logout();
     }
 
     private static string sha256(string value)
@@ -30,31 +50,5 @@ public class NamiExample : MonoBehaviour
         return string.Concat(hash
             .ComputeHash(Encoding.UTF8.GetBytes(value))
             .Select(item => item.ToString("x2")));
-    }
-
-    public void Launch(string label)
-    {
-        if (NamiCustomerManager.IsLoggedIn)
-        {
-            NamiCustomerManager.Logout();
-        }
-        else
-        {
-            NamiCustomerManager.Login(sha256("user-id"));
-        }
-
-        NamiCampaignManager.Launch(label, (paywallAction, s) =>
-        {
-            Debug.Log("----------------------------> onNamiPaywallAction : Queue" + "NamiPaywallAction:" + paywallAction);
-        }, () =>
-        {
-            Debug.Log("----------------------------> onSuccess : Queue");
-        }, error =>
-        {
-            Debug.Log("----------------------------> onFailure : Queue" + "Error:" + error);
-        }, (purchaseState, activePurchases, error) =>
-        {
-            Debug.Log("----------------------------> onPurchaseChanged : Queue" + "NamiPurchaseState:" + purchaseState);
-        });
     }
 }

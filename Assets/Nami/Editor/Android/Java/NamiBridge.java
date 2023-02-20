@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.namiml.NamiConfiguration;
-import com.namiml.NamiError;
-import com.namiml.NamiLogLevel;
 import com.namiml.campaign.LaunchCampaignResult;
 import com.namiml.campaign.NamiCampaignManager;
+import com.namiml.customer.AccountStateAction;
+import com.namiml.customer.CustomerJourneyState;
 import com.namiml.customer.NamiCustomerManager;
 import com.namiml.paywall.model.NamiPaywallAction;
 
@@ -18,6 +18,7 @@ import java.util.List;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
+import kotlin.jvm.functions.Function3;
 
 public class NamiBridge {
     public static void setSettingsListHack(NamiConfiguration.Builder builder) {
@@ -66,15 +67,21 @@ public class NamiBridge {
 
     public static void addRegisterListener(OnCustomerRegisterListener registerListener) {
         Log.d("Unity", "JAVA: ----------------------------> register");
-        NamiCustomerManager.registerAccountStateHandler((accountStateAction, success, namiError) -> {
-            Log.d("Unity", "JAVA: ----------------------------> registerAccountState");
-            registerListener.onRegisterAccountState(accountStateAction, success, namiError.getErrorMessage());
-            return null;
+        NamiCustomerManager.registerAccountStateHandler(new Function3<AccountStateAction, Boolean, com.namiml.util.NamiError, Unit>() {
+            @Override
+            public Unit invoke(AccountStateAction accountStateAction, Boolean success, com.namiml.util.NamiError namiError) {
+                Log.d("Unity", "JAVA: ----------------------------> registerAccountState");
+                registerListener.onRegisterAccountState(accountStateAction, success, namiError == null ? null : namiError.getErrorMessage());
+                return null;
+            }
         });
-        NamiCustomerManager.registerJourneyStateHandler((journeyState) -> {
-            Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
-            registerListener.onRegisterJourneyState(journeyState);
-            return null;
+        NamiCustomerManager.registerJourneyStateHandler(new Function1<CustomerJourneyState, Unit>() {
+            @Override
+            public Unit invoke(CustomerJourneyState journeyState) {
+                Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
+                registerListener.onRegisterJourneyState(journeyState);
+                return null;
+            }
         });
     }
 }

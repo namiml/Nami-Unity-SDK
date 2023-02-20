@@ -15,12 +15,12 @@ namespace NamiSdk.Proxy
         }
 
         [UsedImplicitly]
-        void onRegisterAccountState(AndroidJavaObject accountStateAction, bool success, string error)
+        void onRegisterAccountState(AndroidJavaObject accountStateAction, bool success, AndroidJavaObject error)
         {
             if (accountStateCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                accountStateCallback(accountStateAction.JavaToEnum<AccountStateAction>(), success, error);
+                accountStateCallback(accountStateAction.JavaToEnum<AccountStateAction>(), success, error.JavaToString());
             });
         }
 

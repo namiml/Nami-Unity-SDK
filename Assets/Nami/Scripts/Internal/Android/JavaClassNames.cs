@@ -7,5 +7,6 @@ namespace NamiSdk
         public static readonly string NamiBridge = "com.namiml.unity.NamiBridge";
         public static readonly string NamiCustomerManager = "com.namiml.customer.NamiCustomerManager";
         public static readonly string NamiEntitlementManager = "com.namiml.entitlement.NamiEntitlementManager";
+        public static readonly string NamiPaywallManager = "com.namiml.paywall.NamiPaywallManager";
     }
 }

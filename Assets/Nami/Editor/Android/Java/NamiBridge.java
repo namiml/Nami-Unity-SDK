@@ -1,6 +1,7 @@
 package com.namiml.unity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.namiml.NamiConfiguration;
@@ -11,6 +12,7 @@ import com.namiml.customer.CustomerJourneyState;
 import com.namiml.customer.NamiCustomerManager;
 import com.namiml.entitlement.NamiEntitlement;
 import com.namiml.entitlement.NamiEntitlementManager;
+import com.namiml.paywall.NamiPaywallManager;
 import com.namiml.paywall.model.NamiPaywallAction;
 
 import java.lang.reflect.Field;
@@ -104,6 +106,33 @@ public class NamiBridge {
             public Unit invoke(List<NamiEntitlement> activeEntitlements) {
                 Log.d("Unity", "JAVA: ----------------------------> activeEntitlementsCallback");
                 registerListener.onActiveEntitlementsCallback(activeEntitlements);
+                return null;
+            }
+        });
+    }
+
+    public static void registerPaywallHandler(OnRegisterPaywallListener registerListener){
+        NamiPaywallManager.registerCloseHandler(new Function1<Activity, Unit>() {
+            @Override
+            public Unit invoke(Activity paywallActivity) {
+                Log.d("Unity", "JAVA: ----------------------------> registerCloseHandler");
+                registerListener.onRegisterCloseHandler();
+                return null;
+            }
+        });
+        NamiPaywallManager.registerSignInHandler(new Function1<Context, Unit>() {
+            @Override
+            public Unit invoke(Context context) {
+                Log.d("Unity", "JAVA: ----------------------------> registerSignInHandler");
+                registerListener.onRegisterSignInHandler();
+                return null;
+            }
+        });
+        NamiPaywallManager.registerBuySkuHandler(new Function2<Activity, String, Unit>() {
+            @Override
+            public Unit invoke(Activity paywallActivity, String skuRefId) {
+                Log.d("Unity", "JAVA: ----------------------------> registerBuySkuHandler");
+                registerListener.onRegisterBuySkuHandler(skuRefId);
                 return null;
             }
         });

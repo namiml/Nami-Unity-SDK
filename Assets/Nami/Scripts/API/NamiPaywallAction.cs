@@ -7,6 +7,13 @@ namespace NamiSdk
         SignIn,
         BuySku,
         SelectSku,
-        PurchaseSelectedSku
+#if UNITY_IOS
+        PurchaseSelectedSku,
+        PurchaseSuccess,
+        PurchaseDeferred,
+        PurchaseFailed,
+        PurchaseCancelled,
+        PurchaseUnknown
+#endif
     }
 }

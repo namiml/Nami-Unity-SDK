@@ -1,28 +1,18 @@
 package com.namiml.unity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import com.namiml.NamiConfiguration;
 import com.namiml.campaign.LaunchCampaignResult;
 import com.namiml.campaign.NamiCampaignManager;
-import com.namiml.customer.AccountStateAction;
-import com.namiml.customer.CustomerJourneyState;
 import com.namiml.customer.NamiCustomerManager;
-import com.namiml.entitlement.NamiEntitlement;
 import com.namiml.entitlement.NamiEntitlementManager;
 import com.namiml.paywall.NamiPaywallManager;
-import com.namiml.paywall.model.NamiPaywallAction;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
-import kotlin.jvm.functions.Function2;
-import kotlin.jvm.functions.Function3;
 
 public class NamiBridge {
     public static void setSettingsListHack(NamiConfiguration.Builder builder) {
@@ -41,100 +31,73 @@ public class NamiBridge {
 
     public static void launch(Activity context, String label, OnLaunchCampaignListener launchListener) {
         Log.d("Unity", "JAVA: ----------------------------> launch");
-        NamiCampaignManager.launch(context, label, new Function2<NamiPaywallAction, String, Unit>() {
-            @Override
-            public Unit invoke(NamiPaywallAction namiPaywallAction, String skuId) {
-                Log.d("Unity", "JAVA: ----------------------------> namiPaywallAction Invoke: " + "NamiPaywallAction:" + namiPaywallAction.toString());
-                launchListener.onNamiPaywallAction(namiPaywallAction, skuId);
-                return null;
+        NamiCampaignManager.launch(context, label, (namiPaywallAction, skuId) -> {
+            Log.d("Unity", "JAVA: ----------------------------> namiPaywallAction Invoke: " + "NamiPaywallAction:" + namiPaywallAction.toString());
+            launchListener.onNamiPaywallAction(namiPaywallAction, skuId);
+            return null;
+        }, launchCampaignResult -> {
+            Log.d("Unity", "JAVA: ----------------------------> launchCampaignResult Invoke");
+            if (launchCampaignResult instanceof LaunchCampaignResult.Success) {
+                Log.d("Unity", "JAVA: ----------------------------> onSuccess");
+                launchListener.onSuccess();
             }
-        }, new Function1<LaunchCampaignResult, Unit>() {
-            @Override
-            public Unit invoke(LaunchCampaignResult launchCampaignResult) {
-                Log.d("Unity", "JAVA: ----------------------------> launchCampaignResult Invoke");
-                if (launchCampaignResult instanceof LaunchCampaignResult.Success) {
-                    Log.d("Unity", "JAVA: ----------------------------> onSuccess");
-                    launchListener.onSuccess();
-                }
-                else if (launchCampaignResult instanceof LaunchCampaignResult.Failure) {
-                    Log.d("Unity", "JAVA: ----------------------------> onFailure");
-                    launchListener.onFailure(((LaunchCampaignResult.Failure) launchCampaignResult).getError());
-                } else if (launchCampaignResult instanceof LaunchCampaignResult.PurchaseChanged) {
-                    Log.d("Unity", "JAVA: ----------------------------> PurchaseChanged");
-                    LaunchCampaignResult.PurchaseChanged result = (LaunchCampaignResult.PurchaseChanged) launchCampaignResult;
-                    launchListener.onPurchaseChanged(result.getPurchaseState(), result.getActivePurchases(), result.getErrorMsg());
-                }
-                return null;
+            else if (launchCampaignResult instanceof LaunchCampaignResult.Failure) {
+                Log.d("Unity", "JAVA: ----------------------------> onFailure");
+                launchListener.onFailure(((LaunchCampaignResult.Failure) launchCampaignResult).getError());
+            } else if (launchCampaignResult instanceof LaunchCampaignResult.PurchaseChanged) {
+                Log.d("Unity", "JAVA: ----------------------------> PurchaseChanged");
+                LaunchCampaignResult.PurchaseChanged result = (LaunchCampaignResult.PurchaseChanged) launchCampaignResult;
+                launchListener.onPurchaseChanged(result.getPurchaseState(), result.getActivePurchases(), result.getErrorMsg());
             }
+            return null;
         });
     }
 
     public static void registerCustomerStateHandler(OnRegisterCustomerStateListener registerListener) {
-        Log.d("Unity", "JAVA: ----------------------------> register");
-        NamiCustomerManager.registerAccountStateHandler(new Function3<AccountStateAction, Boolean, com.namiml.util.NamiError, Unit>() {
-            @Override
-            public Unit invoke(AccountStateAction accountStateAction, Boolean success, com.namiml.util.NamiError namiError) {
-                Log.d("Unity", "JAVA: ----------------------------> registerAccountState");
-                registerListener.onRegisterAccountState(accountStateAction, success, namiError == null ? null : namiError.getErrorMessage());
-                return null;
-            }
+        NamiCustomerManager.registerAccountStateHandler((accountStateAction, success, namiError) -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerAccountState");
+            registerListener.onRegisterAccountState(accountStateAction, success, namiError == null ? null : namiError.getErrorMessage());
+            return null;
         });
-        NamiCustomerManager.registerJourneyStateHandler(new Function1<CustomerJourneyState, Unit>() {
-            @Override
-            public Unit invoke(CustomerJourneyState journeyState) {
-                Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
-                registerListener.onRegisterJourneyState(journeyState);
-                return null;
-            }
+        NamiCustomerManager.registerJourneyStateHandler(journeyState -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerJourneyState");
+            registerListener.onRegisterJourneyState(journeyState);
+            return null;
         });
     }
 
     public static void refresh(OnRefreshEntitlementsListener refreshListener){
-        NamiEntitlementManager.refresh(new Function1<List<NamiEntitlement>, Unit>() {
-            @Override
-            public Unit invoke(List<NamiEntitlement> entitlementsList) {
-                Log.d("Unity", "JAVA: ----------------------------> refresh");
-                refreshListener.onRefresh(entitlementsList);
-                return null;
-            }
+        NamiEntitlementManager.refresh(entitlementsList -> {
+            Log.d("Unity", "JAVA: ----------------------------> refresh");
+            refreshListener.onRefresh(entitlementsList);
+            return null;
         });
     }
 
     public static void registerActiveEntitlementsHandler(OnRegisterActiveEntitlementsListener registerListener){
-        NamiEntitlementManager.registerActiveEntitlementsHandler(new Function1<List<NamiEntitlement>, Unit>() {
-            @Override
-            public Unit invoke(List<NamiEntitlement> activeEntitlements) {
-                Log.d("Unity", "JAVA: ----------------------------> activeEntitlementsCallback");
-                registerListener.onActiveEntitlementsCallback(activeEntitlements);
-                return null;
-            }
+        NamiEntitlementManager.registerActiveEntitlementsHandler(activeEntitlements -> {
+            Log.d("Unity", "JAVA: ----------------------------> activeEntitlementsCallback");
+            registerListener.onActiveEntitlementsCallback(activeEntitlements);
+            return null;
         });
     }
 
     public static void registerPaywallHandler(OnRegisterPaywallListener registerListener){
-        NamiPaywallManager.registerCloseHandler(new Function1<Activity, Unit>() {
-            @Override
-            public Unit invoke(Activity paywallActivity) {
-                Log.d("Unity", "JAVA: ----------------------------> registerCloseHandler");
-                registerListener.onRegisterCloseHandler();
-                return null;
-            }
+        NamiPaywallManager.registerCloseHandler(paywallActivity -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerCloseHandler");
+            registerListener.onRegisterCloseHandler();
+            paywallActivity.finish();
+            return null;
         });
-        NamiPaywallManager.registerSignInHandler(new Function1<Context, Unit>() {
-            @Override
-            public Unit invoke(Context context) {
-                Log.d("Unity", "JAVA: ----------------------------> registerSignInHandler");
-                registerListener.onRegisterSignInHandler();
-                return null;
-            }
+        NamiPaywallManager.registerSignInHandler(context -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerSignInHandler");
+            registerListener.onRegisterSignInHandler();
+            return null;
         });
-        NamiPaywallManager.registerBuySkuHandler(new Function2<Activity, String, Unit>() {
-            @Override
-            public Unit invoke(Activity paywallActivity, String skuRefId) {
-                Log.d("Unity", "JAVA: ----------------------------> registerBuySkuHandler");
-                registerListener.onRegisterBuySkuHandler(skuRefId);
-                return null;
-            }
+        NamiPaywallManager.registerBuySkuHandler((paywallActivity, skuRefId) -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerBuySkuHandler");
+            registerListener.onRegisterBuySkuHandler(skuRefId);
+            return null;
         });
     }
 }

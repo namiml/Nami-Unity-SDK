@@ -27,7 +27,7 @@ apply plugin: 'com.android.library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
-    implementation 'com.namiml:sdk-android:3.0.5' // Assets/Nami/Editor/NamiDependencies.xml:42
+    implementation 'com.namiml:sdk-android:3.0.6' // Assets/Nami/Editor/NamiDependencies.xml:42
 // Android Resolver Dependencies End
 **DEPS**}
 

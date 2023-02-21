@@ -32,9 +32,9 @@ public class NamiBridge {
 
     public static void launch(Activity context, String label, OnLaunchCampaignListener launchListener) {
         Log.d("Unity", "JAVA: ----------------------------> launch");
-        NamiCampaignManager.launch(context, label, (namiPaywallAction, skuId) -> {
+        NamiCampaignManager.launch(context, label, (namiPaywallAction, sku) -> {
             Log.d("Unity", "JAVA: ----------------------------> namiPaywallAction Invoke: " + "NamiPaywallAction:" + namiPaywallAction.toString());
-            launchListener.onNamiPaywallAction(namiPaywallAction, skuId);
+            launchListener.onNamiPaywallAction(namiPaywallAction, sku);
             return null;
         }, launchCampaignResult -> {
             Log.d("Unity", "JAVA: ----------------------------> launchCampaignResult Invoke");
@@ -50,6 +50,14 @@ public class NamiBridge {
                 LaunchCampaignResult.PurchaseChanged result = (LaunchCampaignResult.PurchaseChanged) launchCampaignResult;
                 launchListener.onPurchaseChanged(result.getPurchaseState(), result.getActivePurchases(), result.getErrorMsg());
             }
+            return null;
+        });
+    }
+
+    public static void registerCampaignHandler(OnRegisterCampaignListener registerListener){
+        NamiCampaignManager.INSTANCE.registerAvailableCampaignsHandler(availableCampaigns -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerCampaignHandler");
+            registerListener.onRegisterAvailableCampaignsHandler(availableCampaigns);
             return null;
         });
     }

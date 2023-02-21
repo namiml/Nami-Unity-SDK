@@ -23,7 +23,7 @@
 
          Additional repositories can be added using the "repositories" element.
     -->
-    <androidPackage spec="com.namiml:sdk-android:3.0.5">
+    <androidPackage spec="com.namiml:sdk-android:3.0.6">
       <!-- androidSdkPackageIds is optional and contains the set of Android
            SDK package manager components (packages) this package requires.
 

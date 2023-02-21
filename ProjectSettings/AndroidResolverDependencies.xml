@@ -1,6 +1,6 @@
 <dependencies>
   <packages>
-    <package>com.namiml:sdk-android:3.0.5</package>
+    <package>com.namiml:sdk-android:3.0.6</package>
   </packages>
   <files />
   <settings>

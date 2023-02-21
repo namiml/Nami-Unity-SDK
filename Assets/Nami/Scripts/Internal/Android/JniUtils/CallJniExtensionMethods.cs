@@ -97,6 +97,14 @@ namespace NamiSdk.JNI
 			return ajc.GetStatic<int>(fieldName);
 		}
 
+		public static AndroidJavaObject AJOGetStaticAJO(this string className, string fieldName)
+		{
+			using (var ajo = new AndroidJavaObject(className))
+			{
+				return ajo.GetStatic<AndroidJavaObject>(fieldName);
+			}
+		}
+
 		// CALL STATIC
 		public static string CallStaticStr(this AndroidJavaClass ajc, string methodName, params object[] args)
 		{

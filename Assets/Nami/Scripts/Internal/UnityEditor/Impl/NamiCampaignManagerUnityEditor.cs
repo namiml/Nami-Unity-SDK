@@ -6,9 +6,19 @@ namespace NamiSdk.Implementation
 {
     public class NamiCampaignManagerUnityEditor : INamiCampaignManager
     {
-        public void Launch(string label, Action<NamiPaywallAction, string> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<LaunchCampaignError> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback = null)
+        // TODO Editor implementation
+
+        public void Launch(string label, Action<NamiPaywallAction, NamiSKU> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<LaunchCampaignError> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback = null)
         {
-            // TODO Editor implementation
+        }
+
+        public List<NamiCampaign> AllCampaigns()
+        {
+            return default;
+        }
+
+        public void RegisterAvailableCampaignsHandler(Action<List<NamiCampaign>> availableCampaignsCallback)
+        {
         }
     }
 }

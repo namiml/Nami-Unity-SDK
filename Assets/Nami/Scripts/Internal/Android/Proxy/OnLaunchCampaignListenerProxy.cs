@@ -9,12 +9,12 @@ namespace NamiSdk.Proxy
 {
     public class OnLaunchCampaignListenerProxy : AndroidJavaProxy
     {
-        private readonly Action<NamiPaywallAction, string> _paywallActionCallback;
+        private readonly Action<NamiPaywallAction, NamiSKU> _paywallActionCallback;
         private readonly Action _onLaunchSuccessCallback;
         private readonly Action<LaunchCampaignError> _onLaunchFailureCallback;
         private readonly Action<NamiPurchaseState, List<NamiPurchase>, string> _onLaunchPurchaseChangedCallback;
 
-        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, string> paywallActionCallback, Action onLaunchSuccessCallback, Action<LaunchCampaignError> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
+        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, NamiSKU> paywallActionCallback, Action onLaunchSuccessCallback, Action<LaunchCampaignError> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
         {
             _paywallActionCallback = paywallActionCallback;
             _onLaunchSuccessCallback = onLaunchSuccessCallback;
@@ -23,12 +23,12 @@ namespace NamiSdk.Proxy
         }
 
         [UsedImplicitly]
-        void onNamiPaywallAction(AndroidJavaObject namiPaywallAction, AndroidJavaObject skuId)
+        void onNamiPaywallAction(AndroidJavaObject namiPaywallAction, AndroidJavaObject sku)
         {
             if (_paywallActionCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _paywallActionCallback(namiPaywallAction.JavaToEnum<NamiPaywallAction>("NAMI", "_"), skuId.JavaToString());
+                _paywallActionCallback(namiPaywallAction.JavaToEnum<NamiPaywallAction>("NAMI", "_"), sku == null ? null : new NamiSKU(sku));
             });
         }
 

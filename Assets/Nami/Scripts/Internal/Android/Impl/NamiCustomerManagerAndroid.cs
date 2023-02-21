@@ -7,12 +7,12 @@ namespace NamiSdk.Implementation
 {
     public class NamiCustomerManagerAndroid : INamiCustomerManager
     {
-        private readonly OnCustomerRegisterListenerProxy registerListenerProxy;
+        private readonly OnRegisterCustomerStateListenerProxy registerListenerProxy;
 
         public NamiCustomerManagerAndroid()
         {
-            registerListenerProxy = new OnCustomerRegisterListenerProxy();
-            JavaClassNames.NamiBridge.AJCCallStaticOnce("addRegisterListener", registerListenerProxy);
+            registerListenerProxy = new OnRegisterCustomerStateListenerProxy();
+            JavaClassNames.NamiBridge.AJCCallStaticOnce("registerCustomerStateHandler", registerListenerProxy);
         }
 
         public bool IsLoggedIn => JavaClassNames.NamiCustomerManager.AJCCallStaticOnce<bool>("isLoggedIn");

@@ -5,7 +5,7 @@ import com.namiml.customer.CustomerJourneyState;
 
 import java.lang.Boolean;
 
-public interface OnCustomerRegisterListener {
+public interface OnRegisterCustomerStateListener {
     void onRegisterAccountState(AccountStateAction accountStateAction, Boolean success, String error);
     void onRegisterJourneyState(CustomerJourneyState journeyState);
 }

@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace NamiSdk.Proxy
 {
-    public class OnCustomerRegisterListenerProxy : AndroidJavaProxy
+    public class OnRegisterCustomerStateListenerProxy : AndroidJavaProxy
     {
         public Action<AccountStateAction, bool, string> accountStateCallback;
         public Action<CustomerJourneyState> journeyStateCallback;
 
-        public OnCustomerRegisterListenerProxy() : base("com.namiml.unity.OnCustomerRegisterListener")
+        public OnRegisterCustomerStateListenerProxy() : base("com.namiml.unity.OnRegisterCustomerStateListener")
         {
         }
 

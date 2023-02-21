@@ -67,7 +67,7 @@ public class NamiBridge {
         });
     }
 
-    public static void addRegisterListener(OnCustomerRegisterListener registerListener) {
+    public static void registerCustomerStateHandler(OnRegisterCustomerStateListener registerListener) {
         Log.d("Unity", "JAVA: ----------------------------> register");
         NamiCustomerManager.registerAccountStateHandler(new Function3<AccountStateAction, Boolean, com.namiml.util.NamiError, Unit>() {
             @Override

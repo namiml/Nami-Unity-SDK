@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.namiml.NamiConfiguration;
+import com.namiml.billing.NamiPurchaseManager;
 import com.namiml.campaign.LaunchCampaignResult;
 import com.namiml.campaign.NamiCampaignManager;
 import com.namiml.customer.NamiCustomerManager;
@@ -97,6 +98,14 @@ public class NamiBridge {
         NamiPaywallManager.registerBuySkuHandler((paywallActivity, skuRefId) -> {
             Log.d("Unity", "JAVA: ----------------------------> registerBuySkuHandler");
             registerListener.onRegisterBuySkuHandler(skuRefId);
+            return null;
+        });
+    }
+
+    public static void registerPurchasesHandler(OnRegisterPurchasesListener registerListener){
+        NamiPurchaseManager.registerPurchasesChangedHandler((purchases, purchaseState, error) -> {
+            Log.d("Unity", "JAVA: ----------------------------> registerPurchasesChangedHandler");
+            registerListener.onRegisterPurchasesChangedHandler(purchases, purchaseState, error);
             return null;
         });
     }

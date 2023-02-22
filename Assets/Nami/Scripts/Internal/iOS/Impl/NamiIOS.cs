@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using NamiSdk.Interfaces;
 
 namespace NamiSdk.Implementation
@@ -6,7 +7,10 @@ namespace NamiSdk.Implementation
     {
         public void Init(NamiConfiguration configuration)
         {
-            // TODO iOS implementation
+            _nm_init(configuration?.JSON);
         }
+
+        [DllImport("__Internal")]
+        private static extern void _nm_init(string configurationJson);
     }
 }

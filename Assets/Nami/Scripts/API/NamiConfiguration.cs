@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using NamiSdk.Utils;
 using UnityEngine;
 
@@ -8,18 +7,18 @@ namespace NamiSdk
     [Serializable]
     public class NamiConfiguration
     {
-        private string appPlatformId;
-        private NamiLogLevel logLevel;
-        private List<string> settingsList;
-        private bool developmentMode = false;
-        private bool bypassStore = false;
-        private NamiLanguageCode? namiLanguageCode;
+        [SerializeField] private string appPlatformId;
+        [SerializeField] private NamiLogLevel logLevel;
+        // [SerializeField] private List<string> settingsList;
+        [SerializeField] private bool developmentMode = false;
+        [SerializeField] private bool bypassStore = false;
+        [SerializeField] private NamiLanguageCode? namiLanguageCode;
 
-        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, List<string> settingsList, bool developmentMode, bool bypassStore, NamiLanguageCode? namiLanguageCode)
+        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, /* , List<string> settingsList, */ bool developmentMode, bool bypassStore, NamiLanguageCode? namiLanguageCode)
         {
             this.appPlatformId = appPlatformId;
             this.logLevel = logLevel;
-            this.settingsList = settingsList;
+            // this.settingsList = settingsList;
             this.developmentMode = developmentMode;
             this.bypassStore = bypassStore;
             this.namiLanguageCode = namiLanguageCode;
@@ -29,7 +28,7 @@ namespace NamiSdk
         {
             private string appPlatformId;
             private NamiLogLevel logLevel = NamiLogLevel.Warn;
-            private List<string> settingsList;
+            // private List<string> settingsList;
             private bool developmentMode = false;
             private bool bypassStore = false;
             private NamiLanguageCode? namiLanguageCode;
@@ -65,7 +64,7 @@ namespace NamiSdk
 
             public NamiConfiguration Build()
             {
-                return new NamiConfiguration(appPlatformId, logLevel, settingsList, developmentMode, bypassStore, namiLanguageCode);
+                return new NamiConfiguration(appPlatformId, logLevel, /* settingsList, */ developmentMode, bypassStore, namiLanguageCode);
             }
         }
 
@@ -80,6 +79,17 @@ namespace NamiSdk
                 if (namiLanguageCode != null) ajo.CallAJO("namiLanguageCode", ((NamiLanguageCode)namiLanguageCode).EnumToJava(JavaEnumNames.NamiLanguageCode));
                 // JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
                 return ajo.CallAJO("build");
+            }
+        }
+
+        public string JSON
+        {
+            get
+            {
+                var jsonString = JsonUtility.ToJson(this);
+                jsonString = jsonString.AddJsonParam("namiLanguageCode", namiLanguageCode);
+                Debug.Log("-------------------------------> " + jsonString);
+                return jsonString;
             }
         }
     }

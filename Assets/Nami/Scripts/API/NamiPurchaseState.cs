@@ -1,5 +1,8 @@
+using System;
+
 namespace NamiSdk
 {
+    [Serializable]
     public enum NamiPurchaseState
     {
         Pending,

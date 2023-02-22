@@ -56,7 +56,7 @@ public class NamiBridge {
 
     public static void registerCampaignHandler(OnRegisterCampaignListener registerListener){
         NamiCampaignManager.INSTANCE.registerAvailableCampaignsHandler(availableCampaigns -> {
-            Log.d("Unity", "JAVA: ----------------------------> registerCampaignHandler");
+            Log.d("Unity", "JAVA: ----------------------------> registerAvailableCampaignsHandler");
             registerListener.onRegisterAvailableCampaignsHandler(availableCampaigns);
             return null;
         });

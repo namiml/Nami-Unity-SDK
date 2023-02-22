@@ -24,5 +24,15 @@ namespace NamiSdk
         {
             Impl.Launch(label, paywallActionCallback, onLaunchSuccessCallback, onLaunchFailureCallback, onLaunchPurchaseChangedCallback);
         }
+
+        public static List<NamiCampaign> AllCampaigns()
+        {
+            return Impl.AllCampaigns();
+        }
+
+        public static void RegisterAvailableCampaignsHandler(Action<List<NamiCampaign>> availableCampaignsCallback)
+        {
+            Impl.RegisterAvailableCampaignsHandler(availableCampaignsCallback);
+        }
     }
 }

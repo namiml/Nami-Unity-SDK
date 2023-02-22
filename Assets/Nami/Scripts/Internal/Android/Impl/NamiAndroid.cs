@@ -1,5 +1,5 @@
 using NamiSdk.Interfaces;
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 
 namespace NamiSdk.Implementation
 {

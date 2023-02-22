@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 using UnityEngine;
 
 namespace NamiSdk

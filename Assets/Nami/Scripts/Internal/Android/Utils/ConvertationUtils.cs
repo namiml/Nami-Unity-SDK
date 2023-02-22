@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace NamiSdk.JNI
+namespace NamiSdk.Utils
 {
     public static class ConvertationUtils
     {

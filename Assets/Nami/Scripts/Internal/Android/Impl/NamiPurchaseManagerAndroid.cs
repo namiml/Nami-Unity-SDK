@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NamiSdk.Interfaces;
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 using NamiSdk.Proxy;
 
 namespace NamiSdk.Implementation

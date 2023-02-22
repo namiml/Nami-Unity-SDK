@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace NamiSdk.JNI
+namespace NamiSdk.Utils
 {
 	using UnityEngine;
 

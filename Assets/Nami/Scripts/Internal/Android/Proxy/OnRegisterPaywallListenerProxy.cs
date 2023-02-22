@@ -1,6 +1,6 @@
 using System;
 using JetBrains.Annotations;
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 using UnityEngine;
 
 namespace NamiSdk.Proxy

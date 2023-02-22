@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 using UnityEngine;
 
 namespace NamiSdk
 {
+    [Serializable]
     public class NamiConfiguration
     {
         private string appPlatformId;

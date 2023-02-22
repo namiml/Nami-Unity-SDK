@@ -1,4 +1,4 @@
-using NamiSdk.JNI;
+using NamiSdk.Utils;
 using UnityEngine;
 
 namespace NamiSdk

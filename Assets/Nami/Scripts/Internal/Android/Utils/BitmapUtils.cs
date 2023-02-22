@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 
-namespace NamiSdk.JNI
+namespace NamiSdk.Utils
 {
 	[PublicAPI]
 	public static class BitmapUtils

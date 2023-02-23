@@ -82,15 +82,6 @@ namespace NamiSdk
             }
         }
 
-        public string JSON
-        {
-            get
-            {
-                var jsonString = JsonUtility.ToJson(this);
-                jsonString = jsonString.AddJsonParam("namiLanguageCode", namiLanguageCode);
-                Debug.Log("-------------------------------> " + jsonString);
-                return jsonString;
-            }
-        }
+        public string JSON => JsonUtility.ToJson(this).AddJsonParam("namiLanguageCode", (int?)namiLanguageCode);
     }
 }

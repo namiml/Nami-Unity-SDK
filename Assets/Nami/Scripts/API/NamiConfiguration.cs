@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NamiSdk.Utils;
 using UnityEngine;
 
@@ -13,8 +15,9 @@ namespace NamiSdk
         [SerializeField] private bool fullScreenPresentation;
         [SerializeField] private bool developmentMode;
         [SerializeField] private NamiLanguageCode? namiLanguageCode;
+        [SerializeField] private List<string> settingsList;
 
-        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, bool bypassStore, bool fullScreenPresentation, bool developmentMode, NamiLanguageCode? namiLanguageCode)
+        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, bool bypassStore, bool fullScreenPresentation, bool developmentMode, NamiLanguageCode? namiLanguageCode, List<string> settingsList)
         {
             this.appPlatformId = appPlatformId;
             this.logLevel = logLevel;
@@ -22,6 +25,7 @@ namespace NamiSdk
             this.fullScreenPresentation = fullScreenPresentation;
             this.developmentMode = developmentMode;
             this.namiLanguageCode = namiLanguageCode;
+            this.settingsList = settingsList;
         }
 
         public class Builder
@@ -32,6 +36,7 @@ namespace NamiSdk
             private bool fullScreenPresentation = false;
             private bool developmentMode = false;
             private NamiLanguageCode? namiLanguageCode = Application.platform == RuntimePlatform.Android ? (NamiLanguageCode?)null : NamiSdk.NamiLanguageCode.EN;
+            private List<string> settingsList = new List<string>();
 
             public Builder(string appPlatformId)
             {
@@ -70,9 +75,15 @@ namespace NamiSdk
                 return this;
             }
 
+            public Builder SettingsList(params string[] settingsList)
+            {
+                this.settingsList = settingsList.ToList();
+                return this;
+            }
+
             public NamiConfiguration Build()
             {
-                return new NamiConfiguration(appPlatformId, logLevel, bypassStore, fullScreenPresentation, developmentMode, namiLanguageCode);
+                return new NamiConfiguration(appPlatformId, logLevel, bypassStore, fullScreenPresentation, developmentMode, namiLanguageCode, settingsList);
             }
         }
 
@@ -85,7 +96,7 @@ namespace NamiSdk
                 ajo.CallAJO("developmentMode", developmentMode);
                 ajo.CallAJO("logLevel", logLevel.EnumToJava(JavaEnumNames.NamiLogLevel));
                 if (namiLanguageCode != null) ajo.CallAJO("namiLanguageCode", ((NamiLanguageCode)namiLanguageCode).EnumToJava(JavaEnumNames.NamiLanguageCode));
-                // JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo);
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo); // TODO
                 return ajo.CallAJO("build");
             }
         }

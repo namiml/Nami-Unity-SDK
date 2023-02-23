@@ -9,8 +9,14 @@ namespace NamiSdk.Example
 
         private void Start()
         {
-            var targetAppPlatformId = Application.platform == RuntimePlatform.Android ? googleAppPlatformId : appleAppPlatformId;
-            Nami.Init(new NamiConfiguration.Builder(targetAppPlatformId).LogLevel(NamiLogLevel.Debug).Build());
+            var targetAppPlatformId = Application.platform == RuntimePlatform.Android
+                ? googleAppPlatformId
+                : appleAppPlatformId;
+
+            Nami.Init(new NamiConfiguration.Builder(targetAppPlatformId)
+                .LogLevel(NamiLogLevel.Debug)
+                .SettingsList("useStagingAPI")
+                .Build());
         }
     }
 }

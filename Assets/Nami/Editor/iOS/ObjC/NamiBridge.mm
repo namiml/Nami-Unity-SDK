@@ -11,6 +11,10 @@ extern "C" {
         NSDictionary* configurationDict = [NamiJsonUtils deserializeDictionary:configurationString];
 
         NamiConfiguration* namiConfig = [NamiConfiguration configurationForAppPlatformId:configurationDict[@"appPlatformId"]];
+        namiConfig.logLevel = (NamiLogLevel)(NSInteger)configurationDict[@"logLevel"];
+        namiConfig.bypassStore = configurationDict[@"bypassStore"];
+        namiConfig.fullScreenPresentation = configurationDict[@"fullScreenPresentation"];
+        namiConfig.namiLanguageCode = configurationDict[@"namiLanguageCode"];
 
         [Nami configureWith:namiConfig];
     }

@@ -9,29 +9,29 @@ namespace NamiSdk
     {
         [SerializeField] private string appPlatformId;
         [SerializeField] private NamiLogLevel logLevel;
-        // [SerializeField] private List<string> settingsList;
-        [SerializeField] private bool developmentMode = false;
-        [SerializeField] private bool bypassStore = false;
+        [SerializeField] private bool bypassStore;
+        [SerializeField] private bool fullScreenPresentation;
+        [SerializeField] private bool developmentMode;
         [SerializeField] private NamiLanguageCode? namiLanguageCode;
 
-        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, /* , List<string> settingsList, */ bool developmentMode, bool bypassStore, NamiLanguageCode? namiLanguageCode)
+        private NamiConfiguration(string appPlatformId, NamiLogLevel logLevel, bool bypassStore, bool fullScreenPresentation, bool developmentMode, NamiLanguageCode? namiLanguageCode)
         {
             this.appPlatformId = appPlatformId;
             this.logLevel = logLevel;
-            // this.settingsList = settingsList;
-            this.developmentMode = developmentMode;
             this.bypassStore = bypassStore;
+            this.fullScreenPresentation = fullScreenPresentation;
+            this.developmentMode = developmentMode;
             this.namiLanguageCode = namiLanguageCode;
         }
 
         public class Builder
         {
-            private string appPlatformId;
-            private NamiLogLevel logLevel = NamiLogLevel.Warn;
-            // private List<string> settingsList;
-            private bool developmentMode = false;
+            private string appPlatformId = null;
+            private NamiLogLevel logLevel = Application.platform == RuntimePlatform.Android ? NamiLogLevel.Warn : NamiLogLevel.Error;
             private bool bypassStore = false;
-            private NamiLanguageCode? namiLanguageCode;
+            private bool fullScreenPresentation = false;
+            private bool developmentMode = false;
+            private NamiLanguageCode? namiLanguageCode = Application.platform == RuntimePlatform.Android ? (NamiLanguageCode?)null : NamiSdk.NamiLanguageCode.EN;
 
             public Builder(string appPlatformId)
             {
@@ -44,15 +44,23 @@ namespace NamiSdk
                 return this;
             }
 
-            public Builder DevelopmentMode(bool developmentMode)
-            {
-                this.developmentMode = developmentMode;
-                return this;
-            }
-
             public Builder LogLevel(NamiLogLevel logLevel)
             {
                 this.logLevel = logLevel;
+                return this;
+            }
+
+            /// <summary> Apple platforms only </summary>
+            public Builder FullScreenPresentation(bool fullScreenPresentation)
+            {
+                this.fullScreenPresentation = fullScreenPresentation;
+                return this;
+            }
+
+            /// <summary> Android platforms only </summary>
+            public Builder DevelopmentMode(bool developmentMode)
+            {
+                this.developmentMode = developmentMode;
                 return this;
             }
 
@@ -64,7 +72,7 @@ namespace NamiSdk
 
             public NamiConfiguration Build()
             {
-                return new NamiConfiguration(appPlatformId, logLevel, /* settingsList, */ developmentMode, bypassStore, namiLanguageCode);
+                return new NamiConfiguration(appPlatformId, logLevel, bypassStore, fullScreenPresentation, developmentMode, namiLanguageCode);
             }
         }
 
@@ -82,6 +90,6 @@ namespace NamiSdk
             }
         }
 
-        public string JSON => JsonUtility.ToJson(this).AddJsonParam("namiLanguageCode", (int?)namiLanguageCode);
+        public string JSON => JsonUtility.ToJson(this).AddJsonParam("namiLanguageCode", namiLanguageCode.ToString().ToLower());
     }
 }

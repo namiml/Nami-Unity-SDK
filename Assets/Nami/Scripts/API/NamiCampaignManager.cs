@@ -20,9 +20,9 @@ namespace NamiSdk
 #endif
         }
 
-        public static void Launch(string label, Action<NamiPaywallAction, NamiSKU> paywallActionCallback = null, Action onLaunchSuccessCallback = null, Action<LaunchCampaignError> onLaunchFailureCallback = null, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback = null)
+        public static void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
-            Impl.Launch(label, paywallActionCallback, onLaunchSuccessCallback, onLaunchFailureCallback, onLaunchPurchaseChangedCallback);
+            Impl.Launch(label, launchHandler, paywallActionHandler);
         }
 
         public static List<NamiCampaign> AllCampaigns()

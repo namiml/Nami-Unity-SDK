@@ -6,13 +6,11 @@ namespace NamiSdk
 	public class LaunchHandler
 	{
 #if UNITY_IOS
-		public Action OnSuccessCallback;
-		public Action<string> OnFailureCallback;
+		public Action<bool, string> OnLaunchCallback;
 
-		public LaunchHandler(Action onSuccessCallback = null, Action<string> onFailureCallback = null)
+		public LaunchHandler(Action<bool, string> onLaunchCallback = null)
 		{
-			OnSuccessCallback = onSuccessCallback;
-			OnFailureCallback = onFailureCallback;
+			OnLaunchCallback = onLaunchCallback;
 		}
 #else
 		public Action OnSuccessCallback;

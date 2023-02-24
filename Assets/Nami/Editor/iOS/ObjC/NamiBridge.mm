@@ -2,6 +2,7 @@
 #import "NamiApple/NamiApple-Swift.h"
 #import "NamiJsonUtils.h"
 #import "NamiUtils.h"
+#import "NamiCallbacks.h"
 
 #pragma mark - C interface
 
@@ -20,13 +21,15 @@ void _nm_init(char *configurationJson){
     [Nami configureWith:namiConfig];
 }
 
-void _nm_launch(char *label){
+void _nm_launch(char *label, StringCallback callback){
     NSString* labelString = [NamiUtils createNSStringFrom:label];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [NamiCampaignManager launchWithLabel:labelString
                                launchHandler:^(BOOL isSuccess, NSError* error) {
-            // TODO
+            if (callback != NULL) {
+                callback(@"-------------> Test Message");
+            }
         }
                         paywallActionHandler:^(NamiPaywallAction action, NamiSKU * sku, NSError * error, NSArray<NamiPurchase *> * purchases) {
             // TODO

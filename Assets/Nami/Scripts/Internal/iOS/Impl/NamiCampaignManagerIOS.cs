@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using NamiSdk.Interfaces;
+using UnityEngine;
 
 namespace NamiSdk.Implementation
 {
@@ -9,7 +10,7 @@ namespace NamiSdk.Implementation
     {
         public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
-            _nm_launch(label);
+            _nm_launch(label, Callbacks.New(data => Debug.Log("----------------> Success! : " + data)));
         }
 
         public List<NamiCampaign> AllCampaigns()
@@ -22,6 +23,6 @@ namespace NamiSdk.Implementation
         }
 
         [DllImport("__Internal")]
-        private static extern void _nm_launch(string label);
+        private static extern void _nm_launch(string label, Callbacks.StringCallback callback);
     }
 }

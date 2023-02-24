@@ -1,1 +1,1 @@
-typedef void (*StringCallback)(const char *);
+typedef void(StringCallbackDelegate)(void *actionPtr, const char *data);

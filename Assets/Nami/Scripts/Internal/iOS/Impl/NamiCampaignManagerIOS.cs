@@ -23,6 +23,6 @@ namespace NamiSdk.Implementation
         }
 
         [DllImport("__Internal")]
-        private static extern void _nm_launch(string label, Callbacks.StringCallback callback);
+        private static extern void _nm_launch(string label, IntPtr callbackPtr);
     }
 }

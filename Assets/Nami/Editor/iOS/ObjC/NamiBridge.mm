@@ -29,15 +29,22 @@ void _nm_init(char *configurationJson){
     [Nami configureWith:namiConfig];
 }
 
-void _nm_launch(char *label, void* callbackPtr){
+void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbackPtr){
     NSString* labelString = [NamiUtils createNSStringFrom:label];
     
     [NamiCampaignManager launchWithLabel:labelString
-                           launchHandler:^(BOOL isSuccess, NSError* error) {
-        StringCallback(callbackPtr, [NamiUtils createCStringFrom:@"-------------> Test Message"]);
+                           launchHandler:^(BOOL success, NSError* error) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"success"] = @(success);
+        dictionary[@"error"] = @([NamiUtils createCStringFrom:[error localizedDescription]]);
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(launchCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
     }
                     paywallActionHandler:^(NamiPaywallAction action, NamiSKU * sku, NSError * error, NSArray<NamiPurchase *> * purchases) {
         // TODO
+        StringCallback(paywallActionCallbackPtr, [NamiUtils createCStringFrom:@"-------------> Test Message"]);
     }];
     
 }

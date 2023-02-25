@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using NamiSdk.MiniJSON;
 using NamiSdk.Utils;
 using UnityEngine;
 
@@ -14,6 +16,25 @@ namespace NamiSdk
             SkuId = ajo.CallStr("getSkuId");
             TransactionIdentifier = ajo.CallStr("getTransactionIdentifier");
             PurchaseToken = ajo.CallStr("getPurchaseToken");
+        }
+
+        public NamiPurchase(string json)
+        {
+            if (Json.Deserialize(json) is Dictionary<string, object> jsonDictionary)
+            {
+                // TODO
+                /*
+                jsonDictionary.TryGetValue("name", out var nameObject);
+                jsonDictionary.TryGetValue("skuId", out var skuIdObject);
+                jsonDictionary.TryGetValue("product", out var productObject);
+                jsonDictionary.TryGetValue("type", out var typeObject);
+
+                Name = (string)nameObject;
+                SkuId = (string)skuIdObject;
+                Product = (string)productObject;
+                if (typeObject != null) Type = (NamiSKUType)typeObject;
+                */
+            }
         }
 
         public long PurchaseInitiatedTimestamp { get; private set; }

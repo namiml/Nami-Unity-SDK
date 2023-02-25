@@ -16,28 +16,52 @@ namespace NamiSdk.Implementation
             _nm_launch(label,
                 onLaunchCallback == null ? IntPtr.Zero : Callbacks.New(data =>
                 {
-                    object success = false, error = null;
+                    bool success = false;
+                    string error = null;
+
                     if (Json.Deserialize(data) is Dictionary<string, object> jsonDictionary)
                     {
-                        jsonDictionary.TryGetValue("success", out success);
-                        jsonDictionary.TryGetValue("error", out error);
+                        jsonDictionary.TryGetValue("success", out var successObject);
+                        jsonDictionary.TryGetValue("error", out var errorObject);
+
+                        if (successObject != null) success = (bool)successObject;
+                        error = (string)errorObject;
                     }
-                    onLaunchCallback.Invoke((bool)success!, error?.ToString());
+
+                    onLaunchCallback.Invoke(success, error);
                 }),
                 onPaywallActionCallback == null ? IntPtr.Zero : Callbacks.New(data =>
                 {
-                    // TODO
-                    /*
-                    object action = 0, sku = null, error = null, purchases = null;
+                    NamiPaywallAction action = default;
+                    NamiSKU sku = null;
+                    string error = null;
+                    List<NamiPurchase> purchases = null;
+
                     if (Json.Deserialize(data) is Dictionary<string, object> jsonDictionary)
                     {
-                        jsonDictionary.TryGetValue("action", out action);
-                        jsonDictionary.TryGetValue("sku", out sku);
-                        jsonDictionary.TryGetValue("error", out error);
-                        jsonDictionary.TryGetValue("purchases", out purchases);
+                        jsonDictionary.TryGetValue("action", out var actionObject);
+                        jsonDictionary.TryGetValue("sku", out var skuObject);
+                        jsonDictionary.TryGetValue("error", out var errorObject);
+                        jsonDictionary.TryGetValue("purchases", out var purchasesObject);
+
+                        if (actionObject != null) action = (NamiPaywallAction)actionObject;
+                        if (skuObject != null) sku = new NamiSKU((string)skuObject);
+                        error = (string)errorObject;
+                        if (purchasesObject != null)
+                        {
+                            if (Json.Deserialize((string)purchasesObject) is List<string> jsonList)
+                            {
+                                purchases = new List<NamiPurchase>(jsonList.Count);
+                                foreach (var purchaseJson in jsonList)
+                                {
+                                    var purchase = new NamiPurchase(purchaseJson);
+                                    purchases.Add(purchase);
+                                }
+                            }
+                        }
                     }
-                    onPaywallActionCallback.Invoke((NamiPaywallAction)action, sku, error?.ToString(), purchases);
-                    */
+
+                    onPaywallActionCallback.Invoke(action, sku, error, purchases);
                 }));
         }
 

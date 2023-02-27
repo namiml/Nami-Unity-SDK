@@ -88,6 +88,34 @@ namespace NamiSdk.MiniJSON {
             return Parser.Parse(json);
         }
 
+        public static Dictionary<string, object> DeserializeDictionary(object json) {
+            // save the string for debug information
+            if (json == null) {
+                return null;
+            }
+
+            if (json is Dictionary<string, object> dictionary)
+            {
+                return dictionary;
+            }
+
+            return Parser.Parse((string)json) as Dictionary<string, object>;
+        }
+
+        public static List<object> DeserializeList(object json) {
+            // save the string for debug information
+            if (json == null) {
+                return null;
+            }
+
+            if (json is List<object> list)
+            {
+                return list;
+            }
+
+            return Parser.Parse((string)json) as List<object>;
+        }
+
         sealed class Parser : IDisposable {
             const string WORD_BREAK = "{}[],:\"";
 

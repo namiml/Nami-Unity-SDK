@@ -66,20 +66,37 @@ namespace NamiSdk.Implementation
 
         public List<NamiCampaign> AllCampaigns()
         {
+            List<NamiCampaign> campaigns = null;
+
             var data = _nm_allCampaigns();
 
             var dictionary = Json.DeserializeDictionary(data);
             if (dictionary != null)
             {
                 dictionary.TryGetValue("campaigns", out var campaignsObject);
-                return Json.DeserializeList(campaignsObject)?.Select(jsonObject => new NamiCampaign(jsonObject)).ToList();
+                campaigns = Json.DeserializeList(campaignsObject)?.Select(jsonObject => new NamiCampaign(jsonObject)).ToList();
             }
 
-            return null;
+            return campaigns;
         }
 
         public void RegisterAvailableCampaignsHandler(Action<List<NamiCampaign>> availableCampaignsCallback)
         {
+            if (availableCampaignsCallback == null) return;
+            _nm_registerAvailableCampaignsHandler(
+                Callbacks.New(data =>
+                {
+                    List<NamiCampaign> campaigns = null;
+
+                    var dictionary = Json.DeserializeDictionary(data);
+                    if (dictionary != null)
+                    {
+                        dictionary.TryGetValue("campaigns", out var campaignsObject);
+                        campaigns = Json.DeserializeList(campaignsObject)?.Select(jsonObject => new NamiCampaign(jsonObject)).ToList();
+                    }
+
+                    availableCampaignsCallback.Invoke(campaigns);
+                }));
         }
 
         [DllImport("__Internal")]
@@ -87,5 +104,8 @@ namespace NamiSdk.Implementation
 
         [DllImport("__Internal")]
         private static extern string _nm_allCampaigns();
+
+        [DllImport("__Internal")]
+        private static extern void _nm_registerAvailableCampaignsHandler(IntPtr availableCampaignsCallbackPtr);
     }
 }

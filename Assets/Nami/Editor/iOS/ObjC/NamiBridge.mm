@@ -60,7 +60,19 @@ char* _nm_allCampaigns(){
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     dictionary[@"campaigns"] = [NamiJsonUtils serializeNamiCampaignArray:[NamiCampaignManager allCampaigns]];
     NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
-
+    
     return [NamiUtils createCStringFrom:serializedDictionary];
 }
+
+void _nm_registerAvailableCampaignsHandler(void* availableCampaignsCallbackPtr){
+    [NamiCampaignManager registerAvailableCampaignsHandler:^(NSArray<NamiCampaign *> * campaigns) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"campaigns"] = [NamiJsonUtils serializeNamiCampaignArray:campaigns];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(availableCampaignsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
+
 }

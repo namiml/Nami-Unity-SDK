@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using NamiSdk.Interfaces;
 using NamiSdk.MiniJSON;
@@ -51,12 +52,7 @@ namespace NamiSdk.Implementation
                         {
                             if (Json.Deserialize((string)purchasesObject) is List<string> jsonList)
                             {
-                                purchases = new List<NamiPurchase>(jsonList.Count);
-                                foreach (var purchaseJson in jsonList)
-                                {
-                                    var purchase = new NamiPurchase(purchaseJson);
-                                    purchases.Add(purchase);
-                                }
+                                purchases = jsonList.Select(jsonString => new NamiPurchase(jsonString)).ToList();
                             }
                         }
                     }

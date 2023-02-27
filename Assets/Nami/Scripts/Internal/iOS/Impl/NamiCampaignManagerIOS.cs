@@ -20,10 +20,11 @@ namespace NamiSdk.Implementation
                     bool success = false;
                     string error = null;
 
-                    if (Json.Deserialize(data) is Dictionary<string, object> jsonDictionary)
+                    var dictionary = Json.DeserializeDictionary(data);
+                    if (dictionary != null)
                     {
-                        jsonDictionary.TryGetValue("success", out var successObject);
-                        jsonDictionary.TryGetValue("error", out var errorObject);
+                        dictionary.TryGetValue("success", out var successObject);
+                        dictionary.TryGetValue("error", out var errorObject);
 
                         if (successObject != null) success = (bool)successObject;
                         error = (string)errorObject;
@@ -38,21 +39,23 @@ namespace NamiSdk.Implementation
                     string error = null;
                     List<NamiPurchase> purchases = null;
 
-                    if (Json.Deserialize(data) is Dictionary<string, object> jsonDictionary)
+                    var dictionary = Json.DeserializeDictionary(data);
+                    if (dictionary != null)
                     {
-                        jsonDictionary.TryGetValue("action", out var actionObject);
-                        jsonDictionary.TryGetValue("sku", out var skuObject);
-                        jsonDictionary.TryGetValue("error", out var errorObject);
-                        jsonDictionary.TryGetValue("purchases", out var purchasesObject);
+                        dictionary.TryGetValue("action", out var actionObject);
+                        dictionary.TryGetValue("sku", out var skuObject);
+                        dictionary.TryGetValue("error", out var errorObject);
+                        dictionary.TryGetValue("purchases", out var purchasesObject);
 
-                        if (actionObject != null) action = (NamiPaywallAction)actionObject;
-                        if (skuObject != null) sku = new NamiSKU((string)skuObject);
+                        if (actionObject != null) action = (NamiPaywallAction)(long)actionObject;
+                        if (skuObject != null) sku = new NamiSKU(skuObject);
                         error = (string)errorObject;
                         if (purchasesObject != null)
                         {
-                            if (Json.Deserialize((string)purchasesObject) is List<string> jsonList)
+                            var list = Json.DeserializeList(purchasesObject);
+                            if (list != null)
                             {
-                                purchases = jsonList.Select(jsonString => new NamiPurchase(jsonString)).ToList();
+                                purchases = list.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
                             }
                         }
                     }

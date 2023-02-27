@@ -37,7 +37,7 @@ void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbac
         
         NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
         dictionary[@"success"] = @(success);
-        dictionary[@"error"] = @([NamiUtils createCStringFrom:[error localizedDescription]]);
+        dictionary[@"error"] = [error localizedDescription];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
         StringCallback(launchCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
@@ -46,12 +46,12 @@ void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbac
         
         NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
         dictionary[@"action"] = @(action);
-        dictionary[@"sku"] = @([NamiUtils createCStringFrom:[NamiJsonUtils serializeNamiSKU:sku]]);
-        dictionary[@"error"] = @([NamiUtils createCStringFrom:[error localizedDescription]]);
-        dictionary[@"purchases"] = @([NamiUtils createCStringFrom:[NamiJsonUtils serializeNamiPurchaseArray:purchases]]);
+        dictionary[@"sku"] = [NamiJsonUtils serializeNamiSKU:sku];
+        dictionary[@"error"] = [error localizedDescription];
+        dictionary[@"purchases"] = [NamiJsonUtils serializeNamiPurchaseArray:purchases];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(paywallActionCallbackPtr, [NamiUtils createCStringFrom:@"-------------> Test Message"]);
+        StringCallback(paywallActionCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
     }];
     
 }

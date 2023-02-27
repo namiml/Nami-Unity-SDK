@@ -15,19 +15,20 @@ namespace NamiSdk
             Type = ajo.CallAJO("getType").JavaToEnum<NamiSKUType>("_");
         }
 
-        public NamiSKU(string json)
+        public NamiSKU(object json)
         {
-            if (Json.Deserialize(json) is Dictionary<string, object> jsonDictionary)
+            var dictionary = Json.DeserializeDictionary(json);
+            if (dictionary != null)
             {
-                jsonDictionary.TryGetValue("name", out var nameObject);
-                jsonDictionary.TryGetValue("skuId", out var skuIdObject);
-                jsonDictionary.TryGetValue("product", out var productObject);
-                jsonDictionary.TryGetValue("type", out var typeObject);
+                dictionary.TryGetValue("name", out var nameObject);
+                dictionary.TryGetValue("skuId", out var skuIdObject);
+                dictionary.TryGetValue("product", out var productObject);
+                dictionary.TryGetValue("type", out var typeObject);
 
                 Name = (string)nameObject;
                 SkuId = (string)skuIdObject;
                 Product = (string)productObject;
-                if (typeObject != null) Type = (NamiSKUType)typeObject;
+                if (typeObject != null) Type = (NamiSKUType)(long)typeObject;
             }
         }
 

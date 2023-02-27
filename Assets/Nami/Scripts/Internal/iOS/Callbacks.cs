@@ -21,7 +21,7 @@ namespace NamiSdk
             if (actionPtr != IntPtr.Zero)
             {
                 var action = actionPtr.Cast<Action<string>>();
-                action(data);
+                NamiHelper.Queue(() => action(data));
             }
         }
 

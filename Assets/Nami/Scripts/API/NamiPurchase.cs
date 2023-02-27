@@ -19,28 +19,30 @@ namespace NamiSdk
             PurchaseToken = ajo.CallStr("getPurchaseToken");
         }
 
-        public NamiPurchase(string json)
+        public NamiPurchase(object json)
         {
-            if (Json.Deserialize(json) is Dictionary<string, object> jsonDictionary)
+            var dictionary = Json.DeserializeDictionary(json);
+            if (dictionary != null)
             {
-                jsonDictionary.TryGetValue("purchaseInitiatedTimestamp", out var purchaseInitiatedTimestampObject);
-                jsonDictionary.TryGetValue("expires", out var expiresObject);
-                jsonDictionary.TryGetValue("skuId", out var skuIdObject);
-                jsonDictionary.TryGetValue("transactionIdentifier", out var transactionIdentifierObject);
-                jsonDictionary.TryGetValue("sku", out var skuObject);
-                jsonDictionary.TryGetValue("entitlementsGranted", out var entitlementsGrantedObject);
-                jsonDictionary.TryGetValue("transaction", out var transactionObject);
+                dictionary.TryGetValue("purchaseInitiatedTimestamp", out var purchaseInitiatedTimestampObject);
+                dictionary.TryGetValue("expires", out var expiresObject);
+                dictionary.TryGetValue("skuId", out var skuIdObject);
+                dictionary.TryGetValue("transactionIdentifier", out var transactionIdentifierObject);
+                dictionary.TryGetValue("sku", out var skuObject);
+                dictionary.TryGetValue("entitlementsGranted", out var entitlementsGrantedObject);
+                dictionary.TryGetValue("transaction", out var transactionObject);
 
                 if (purchaseInitiatedTimestampObject != null) PurchaseInitiatedTimestamp = (long)(double)purchaseInitiatedTimestampObject;
                 if (expiresObject != null) Expires = expiresObject.ToDateTime();
                 SkuId = (string)skuIdObject;
                 TransactionIdentifier = (string)transactionIdentifierObject;
-                if (skuObject != null) Sku = new NamiSKU((string)skuObject);
+                if (skuObject != null) Sku = new NamiSKU(skuObject);
                 if (entitlementsGrantedObject != null)
                 {
-                    if (Json.Deserialize((string)entitlementsGrantedObject) is List<string> jsonList)
+                    var list = Json.DeserializeList(entitlementsGrantedObject);
+                    if (list != null)
                     {
-                        EntitlementsGranted = jsonList.Select(jsonString => new NamiEntitlement(jsonString)).ToList();
+                        EntitlementsGranted = list.Select(jsonObject => new NamiEntitlement(jsonObject)).ToList();
                     }
                 }
                 Transaction = (string)transactionObject;

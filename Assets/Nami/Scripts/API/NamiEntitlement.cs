@@ -19,23 +19,25 @@ namespace NamiSdk
             RelatedSKUs = ajo.CallAJO("getRelatedSKUs").FromJavaList<AndroidJavaObject>().Select(o => new NamiSKU(o)).ToList();
         }
 
-        public NamiEntitlement(string json)
+        public NamiEntitlement(object json)
         {
-            if (Json.Deserialize(json) is Dictionary<string, object> jsonDictionary)
+            var dictionary = Json.DeserializeDictionary(json);
+            if (dictionary != null)
             {
-                jsonDictionary.TryGetValue("activePurchases", out var activePurchasesObject);
-                jsonDictionary.TryGetValue("desc", out var descObject);
-                jsonDictionary.TryGetValue("name", out var nameObject);
-                jsonDictionary.TryGetValue("namiId", out var namiIdObject);
-                jsonDictionary.TryGetValue("purchasedSkus", out var purchasedSkusObject);
-                jsonDictionary.TryGetValue("referenceId", out var referenceIdObject);
-                jsonDictionary.TryGetValue("relatedSkus", out var relatedSkusObject);
+                dictionary.TryGetValue("activePurchases", out var activePurchasesObject);
+                dictionary.TryGetValue("desc", out var descObject);
+                dictionary.TryGetValue("name", out var nameObject);
+                dictionary.TryGetValue("namiId", out var namiIdObject);
+                dictionary.TryGetValue("purchasedSkus", out var purchasedSkusObject);
+                dictionary.TryGetValue("referenceId", out var referenceIdObject);
+                dictionary.TryGetValue("relatedSkus", out var relatedSkusObject);
                 
                 if (activePurchasesObject != null)
                 {
-                    if (Json.Deserialize((string)activePurchasesObject) is List<string> jsonList)
+                    var list = Json.DeserializeList(activePurchasesObject);
+                    if (list != null)
                     {
-                        ActivePurchases = jsonList.Select(jsonString => new NamiPurchase(jsonString)).ToList();
+                        ActivePurchases = list.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
                     }
                 }
                 Desc = (string)descObject;
@@ -43,17 +45,19 @@ namespace NamiSdk
                 NamiId = (string)namiIdObject;
                 if (purchasedSkusObject != null)
                 {
-                    if (Json.Deserialize((string)purchasedSkusObject) is List<string> jsonList)
+                    var list = Json.DeserializeList(purchasedSkusObject);
+                    if (list != null)
                     {
-                        PurchasedSKUs = jsonList.Select(jsonString => new NamiSKU(jsonString)).ToList();
+                        PurchasedSKUs = list.Select(jsonObject => new NamiSKU(jsonObject)).ToList();
                     }
                 }
                 ReferenceId = (string)referenceIdObject;
                 if (relatedSkusObject != null)
                 {
-                    if (Json.Deserialize((string)relatedSkusObject) is List<string> jsonList)
+                    var list = Json.DeserializeList(relatedSkusObject);
+                    if (list != null)
                     {
-                        RelatedSKUs = jsonList.Select(jsonString => new NamiSKU(jsonString)).ToList();
+                        RelatedSKUs = list.Select(jsonObject => new NamiSKU(jsonObject)).ToList();
                     }
                 }
             }

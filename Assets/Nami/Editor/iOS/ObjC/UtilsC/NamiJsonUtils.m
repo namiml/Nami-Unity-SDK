@@ -55,70 +55,96 @@
     return result;
 }
 
-+ (NSString *)serializeSKProduct:(SKProduct *)product {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:product options:nil error:&error];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
++ (NSDictionary *)serializeSKProduct:(SKProduct *)product {
+    if (product == NULL){
+        return NULL;
+    }
+    NSDictionary* dictionary = @{
+        @"localizedDescription": product.localizedDescription,
+        @"localizedTitle": product.localizedTitle,
+        @"productIdentifier": product.productIdentifier,
+        @"price": [product.price stringValue],
+        @"priceLocale": product.priceLocale.localeIdentifier
+    };
+    return dictionary;
 }
 
-+ (NSString *)serializeNamiSKU:(NamiSKU *)sku{
++ (NSDictionary *)serializeNamiSKU:(NamiSKU *)sku{
+    if (sku == NULL){
+        return NULL;
+    }
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
-    dictionary[@"name"] = @([NamiUtils createCStringFrom:[sku name]]);
-    dictionary[@"skuId"] = @([NamiUtils createCStringFrom:[sku skuId]]);
-    dictionary[@"product"] = @([NamiUtils createCStringFrom:[self serializeSKProduct:[sku product]]]);
+    dictionary[@"name"] = [sku name];
+    dictionary[@"skuId"] = [sku skuId];
+    dictionary[@"product"] = [self serializeSKProduct:[sku product]];
     dictionary[@"type"] = @([sku type]);
-    return [self serializeDictionary:dictionary];
+    return dictionary;
 }
 
-+ (NSString *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus{
++ (NSArray *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus{
+    if (skus == NULL){
+        return NULL;
+    }
     NSUInteger count = skus.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:[self serializeNamiSKU:skus[i]]];
+        [array addObject:skus[i]];
     }
-    return [self serializeArray:array];
+    return array;
 }
 
-+ (NSString *)serializeNamiEntitlement:(NamiEntitlement *)entitlement{
++ (NSDictionary *)serializeNamiEntitlement:(NamiEntitlement *)entitlement{
+    if (entitlement == NULL){
+        return NULL;
+    }
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
-    dictionary[@"activePurchases"] = @([NamiUtils createCStringFrom:[self serializeNamiPurchaseArray:[entitlement activePurchases]]]);
-    dictionary[@"desc"] = @([NamiUtils createCStringFrom:[entitlement desc]]);
-    dictionary[@"name"] = @([NamiUtils createCStringFrom:[entitlement name]]);
-    dictionary[@"namiId"] = @([NamiUtils createCStringFrom:[entitlement namiId]]);
-    dictionary[@"purchasedSkus"] = @([NamiUtils createCStringFrom:[self serializeNamiSKUArray:[entitlement purchasedSkus]]]);
-    dictionary[@"referenceId"] = @([NamiUtils createCStringFrom:[entitlement referenceId]]);
-    dictionary[@"relatedSkus"] = @([NamiUtils createCStringFrom:[self serializeNamiSKUArray:[entitlement relatedSkus]]]);
-    return [self serializeDictionary:dictionary];
+    dictionary[@"activePurchases"] = [self serializeNamiPurchaseArray:[entitlement activePurchases]];
+    dictionary[@"desc"] = [entitlement desc];
+    dictionary[@"name"] = [entitlement name];
+    dictionary[@"namiId"] = [entitlement namiId];
+    dictionary[@"purchasedSkus"] = [self serializeNamiSKUArray:[entitlement purchasedSkus]];
+    dictionary[@"referenceId"] = [entitlement referenceId];
+    dictionary[@"relatedSkus"] = [self serializeNamiSKUArray:[entitlement relatedSkus]];
+    return dictionary;
 }
 
-+ (NSString *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements{
++ (NSArray *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements{
+    if (entitlements == NULL){
+        return NULL;
+    }
     NSUInteger count = entitlements.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:[self serializeNamiEntitlement:entitlements[i]]];
+        [array addObject:entitlements[i]];
     }
-    return [self serializeArray:array];
+    return array;
 }
 
-+ (NSString *)serializeNamiPurchase:(NamiPurchase *)purchase{
++ (NSDictionary *)serializeNamiPurchase:(NamiPurchase *)purchase{
+    if (purchase == NULL){
+        return NULL;
+    }
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
-    dictionary[@"purchaseInitiatedTimestamp"] = @([[purchase purchaseInitiatedTimestamp] timeIntervalSince1970]);
-    dictionary[@"expires"] = @([[purchase expires] timeIntervalSince1970]);
-    dictionary[@"skuId"] = @([NamiUtils createCStringFrom:[purchase skuId]]);
-    dictionary[@"transactionIdentifier"] = @([NamiUtils createCStringFrom:[purchase transactionIdentifier]]);
-    dictionary[@"sku"] = @([NamiUtils createCStringFrom:[self serializeNamiSKU:[purchase sku]]]);
-    dictionary[@"entitlementsGranted"] = @([NamiUtils createCStringFrom:[self serializeNamiEntitlementArray:[purchase entitlementsGranted]]]);
-    dictionary[@"transaction"] = @([NamiUtils createCStringFrom:[purchase transactionIdentifier]]);
-    return [self serializeDictionary:dictionary];
+    dictionary[@"purchaseInitiatedTimestamp"] = [NSNumber numberWithDouble:[[purchase purchaseInitiatedTimestamp] timeIntervalSince1970]];
+    dictionary[@"expires"] = [NSNumber numberWithDouble:[[purchase expires] timeIntervalSince1970]];
+    dictionary[@"skuId"] = [purchase skuId];
+    dictionary[@"transactionIdentifier"] = [purchase transactionIdentifier];
+    dictionary[@"sku"] = [self serializeNamiSKU:[purchase sku]];
+    dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
+    dictionary[@"transaction"] = [purchase transactionIdentifier];
+    return dictionary;
 }
 
-+ (NSString *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases{
++ (NSArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases{
+    if (purchases == NULL){
+        return NULL;
+    }
     NSUInteger count = purchases.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:[self serializeNamiPurchase:purchases[i]]];
+        [array addObject:purchases[i]];
     }
-    return [self serializeArray:array];
+    return array;
 }
 
 @end

@@ -5,10 +5,10 @@ namespace NamiSdk
     [Serializable]
     public enum LaunchCampaignError
     {
-        SDKNotInitialized,
         DefaultCampaignNotFound,
         LabeledCampaignNotFound,
+        CampaignDataNotFound,
         PaywallAlreadyDisplayed,
-        CampaignDataNotFound
+        SDKNotInitialized
     }
 }

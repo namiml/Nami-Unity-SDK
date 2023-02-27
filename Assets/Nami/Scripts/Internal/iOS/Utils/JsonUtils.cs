@@ -1,3 +1,5 @@
+using System;
+
 namespace NamiSdk.Utils
 {
 	public static class JsonUtils
@@ -15,6 +17,13 @@ namespace NamiSdk.Utils
 		public static string AddJsonParam(this string jsonString, string paramName, int? paramValue, bool useScopes = false)
 		{
 			return jsonString.AddJsonParam(paramName, paramValue == null ? "null" : paramValue.ToString(), useScopes);
+		}
+
+		public static DateTime ToDateTime(this object obj)
+		{
+			var unixTimeMilliseconds = (double)obj;
+			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+			return epoch.AddMilliseconds(unixTimeMilliseconds);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NamiSdk.MiniJSON;
 using NamiSdk.Utils;
 using UnityEngine;
@@ -22,49 +23,51 @@ namespace NamiSdk
         {
             if (Json.Deserialize(json) is Dictionary<string, object> jsonDictionary)
             {
-                // TODO
-                /*
-                jsonDictionary.TryGetValue("name", out var nameObject);
+                jsonDictionary.TryGetValue("purchaseInitiatedTimestamp", out var purchaseInitiatedTimestampObject);
+                jsonDictionary.TryGetValue("expires", out var expiresObject);
                 jsonDictionary.TryGetValue("skuId", out var skuIdObject);
-                jsonDictionary.TryGetValue("product", out var productObject);
-                jsonDictionary.TryGetValue("type", out var typeObject);
+                jsonDictionary.TryGetValue("transactionIdentifier", out var transactionIdentifierObject);
+                jsonDictionary.TryGetValue("sku", out var skuObject);
+                jsonDictionary.TryGetValue("entitlementsGranted", out var entitlementsGrantedObject);
+                jsonDictionary.TryGetValue("transaction", out var transactionObject);
 
-                Name = (string)nameObject;
+                if (purchaseInitiatedTimestampObject != null) PurchaseInitiatedTimestamp = (long)(double)purchaseInitiatedTimestampObject;
+                if (expiresObject != null) Expires = expiresObject.ToDateTime();
                 SkuId = (string)skuIdObject;
-                Product = (string)productObject;
-                if (typeObject != null) Type = (NamiSKUType)typeObject;
-                */
+                TransactionIdentifier = (string)transactionIdentifierObject;
+                if (skuObject != null) Sku = new NamiSKU((string)skuObject);
+                if (entitlementsGrantedObject != null)
+                {
+                    if (Json.Deserialize((string)entitlementsGrantedObject) is List<string> jsonList)
+                    {
+                        EntitlementsGranted = jsonList.Select(jsonString => new NamiEntitlement(jsonString)).ToList();
+                    }
+                }
+                Transaction = (string)transactionObject;
             }
         }
 
         public long PurchaseInitiatedTimestamp { get; private set; }
+
         public DateTime Expires { get; private set; }
+
+        /// <summary> Android platforms only </summary>
         public NamiPurchaseSource PurchaseSource { get; private set; }
+
         public string SkuId { get; private set; }
+
         public string TransactionIdentifier { get; private set; }
+
+        /// <summary> Android platforms only </summary>
         public string PurchaseToken { get; private set; }
+
+        /// <summary> Apple platforms only </summary>
+        public NamiSKU Sku { get; private set; }
+
+        /// <summary> Apple platforms only </summary>
+        public List<NamiEntitlement> EntitlementsGranted { get; private set; }
+
+        /// <summary> Apple platforms only </summary>
+        public string Transaction { get; private set; }
     }
-
-    // TODO implemetn NamiPurchase for iOS
-
-    /*
-        App Store
-
-        sku - a NamiSKU object representing the in-app purchase product SKU the device purchased.
-        expires - date the purchase expires if it is a subscription
-        entitlementGranted - a NamiEntitlement object for the entitlement granted by this purchase.
-        transactionIdentifier - App Store ID for the transaction
-        transaction - the StoreKit transaction object for the purchase
-        skuId - the App Store reference ID of the purchased product SKU
-        purchaseInitiatedTimestamp - The date and time when the purchase was initiated
-
-        Google Play
-
-        purchaseInitiatedTimestamp - The date and time when the purchase was initiated
-        expires - (bypass store only) Indicates when this purchase will cease
-        purchaseSource - NamiPurchaseSource
-        skuId - the Google Play reference ID of the purchased product SKU
-        transactionIdentifier - The purchase order ID record associated to this purchase
-        purchaseToken - The purchase token associated to this purchase
-     */
 }

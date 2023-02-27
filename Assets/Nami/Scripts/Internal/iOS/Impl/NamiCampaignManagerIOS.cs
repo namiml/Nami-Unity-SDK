@@ -66,7 +66,16 @@ namespace NamiSdk.Implementation
 
         public List<NamiCampaign> AllCampaigns()
         {
-            return default;
+            var data = _nm_allCampaigns();
+
+            var dictionary = Json.DeserializeDictionary(data);
+            if (dictionary != null)
+            {
+                dictionary.TryGetValue("campaigns", out var campaignsObject);
+                return Json.DeserializeList(campaignsObject)?.Select(jsonObject => new NamiCampaign(jsonObject)).ToList();
+            }
+
+            return null;
         }
 
         public void RegisterAvailableCampaignsHandler(Action<List<NamiCampaign>> availableCampaignsCallback)
@@ -75,5 +84,8 @@ namespace NamiSdk.Implementation
 
         [DllImport("__Internal")]
         private static extern void _nm_launch(string label, IntPtr launchCallbackPtr, IntPtr paywallActionCallbackPtr);
+
+        [DllImport("__Internal")]
+        private static extern string _nm_allCampaigns();
     }
 }

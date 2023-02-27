@@ -55,4 +55,12 @@ void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbac
     }];
     
 }
+
+char* _nm_allCampaigns(){
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    dictionary[@"campaigns"] = [NamiJsonUtils serializeNamiCampaignArray:[NamiCampaignManager allCampaigns]];
+    NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+
+    return [NamiUtils createCStringFrom:serializedDictionary];
+}
 }

@@ -11,10 +11,12 @@
 + (NSArray<NSNumber *> *)deserializeNumbersArray:(NSArray *)numbers;
 
 + (NSDictionary *)serializeNamiSKU:(NamiSKU *)sku;
-+ (NSArray *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus;
++ (NSMutableArray *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus;
 + (NSDictionary *)serializeNamiEntitlement:(NamiEntitlement *)entitlement;
-+ (NSArray *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements;
++ (NSMutableArray *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements;
 + (NSDictionary *)serializeNamiPurchase:(NamiPurchase *)purchase;
-+ (NSArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases;
++ (NSMutableArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases;
++ (NSDictionary *)serializeNamiCampaign:(NamiCampaign *)campaign;
++ (NSMutableArray *)serializeNamiCampaignArray:(NSArray<NamiCampaign *> *)campaigns;
 
 @end

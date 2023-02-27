@@ -81,14 +81,14 @@
     return dictionary;
 }
 
-+ (NSArray *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus{
++ (NSMutableArray *)serializeNamiSKUArray:(NSArray<NamiSKU *> *)skus{
     if (skus == NULL){
         return NULL;
     }
     NSUInteger count = skus.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:skus[i]];
+        [array addObject:[self serializeNamiSKU:skus[i]]];
     }
     return array;
 }
@@ -108,14 +108,14 @@
     return dictionary;
 }
 
-+ (NSArray *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements{
++ (NSMutableArray *)serializeNamiEntitlementArray:(NSArray<NamiEntitlement *> *)entitlements{
     if (entitlements == NULL){
         return NULL;
     }
     NSUInteger count = entitlements.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:entitlements[i]];
+        [array addObject:[self serializeNamiEntitlement:entitlements[i]]];
     }
     return array;
 }
@@ -135,14 +135,41 @@
     return dictionary;
 }
 
-+ (NSArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases{
++ (NSMutableArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases{
     if (purchases == NULL){
         return NULL;
     }
     NSUInteger count = purchases.count;
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
     for (NSUInteger i = 0; i < count; ++i){
-        [array addObject:purchases[i]];
+        [array addObject:[self serializeNamiPurchase:purchases[i]]];
+    }
+    return array;
+}
+
++ (NSDictionary *)serializeNamiCampaign:(NamiCampaign *)campaign{
+    if (campaign == NULL){
+        return NULL;
+    }
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    // dictionary[@"id"] = [campaign id];
+    // dictionary[@"rule"] = @("");
+    // dictionary[@"paywall"] = @("");
+    // dictionary[@"segment"] = @("");
+    // dictionary[@"type"] = @("");
+    // dictionary[@"value"] = @("");
+    // TODO
+    return dictionary;
+}
+
++ (NSMutableArray *)serializeNamiCampaignArray:(NSArray<NamiCampaign *> *)campaigns{
+    if (campaigns == NULL){
+        return NULL;
+    }
+    NSUInteger count = campaigns.count;
+    NSMutableArray* array = [NSMutableArray arrayWithCapacity:count];
+    for (NSUInteger i = 0; i < count; ++i){
+        [array addObject:[self serializeNamiCampaign:campaigns[i]]];
     }
     return array;
 }

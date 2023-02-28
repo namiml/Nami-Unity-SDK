@@ -126,32 +126,56 @@ void _nm_registerJourneyStateHandler(void* journeyStateCallbackPtr){
     }];
 }
 
+char* _nm_active(){
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    dictionary[@"entitlements"] = [NamiJsonUtils serializeNamiEntitlementArray:[NamiEntitlementManager active]];
+    NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+    
+    return [NamiUtils createCStringFrom:serializedDictionary];
+}
+
+bool _nm_isEntitlementActive(char* referenceId){
+    return [NamiEntitlementManager isEntitlementActive:[NamiUtils createNSStringFrom:referenceId]];
+}
+
+void _nm_refresh(void* refreshCallbackPtr){
+    [NamiEntitlementManager refresh:^(NSArray<NamiEntitlement *> * entitlements) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"entitlements"] = [NamiJsonUtils serializeNamiEntitlementArray:entitlements];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(refreshCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
+
+void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr){
+    [NamiEntitlementManager registerActiveEntitlementsHandler:^(NSArray<NamiEntitlement *> * entitlements) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"entitlements"] = [NamiJsonUtils serializeNamiEntitlementArray:entitlements];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(activeEntitlementsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
+
 /* TODO
-char* _nm_active();
-
-bool _nm_isEntitlementActive(char* referenceId);
-
-void _nm_refresh(void* refreshCallbackPtr);
-
-void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr);
-*/
-
-/* TODO
-void _nm_registerCloseHandler(void* closeCallbackPtr);
-
-void _nm_registerSignInHandler(void* signInCallbackPtr);
-
-void _nm_registerBuySkuHandler(void* buySkuCallbackPtr);
-
-void _nm_buySkuComplete(char* purchase, char* skuRefId);
-*/
+ void _nm_registerCloseHandler(void* closeCallbackPtr);
+ 
+ void _nm_registerSignInHandler(void* signInCallbackPtr);
+ 
+ void _nm_registerBuySkuHandler(void* buySkuCallbackPtr);
+ 
+ void _nm_buySkuComplete(char* purchase, char* skuRefId);
+ */
 
 /* TODO
-void _nm_consumePurchasedSku(char* skuId);
-
-void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr);
-
-bool _nm_isSkuIdPurchased(char* skuId);
-*/
+ void _nm_consumePurchasedSku(char* skuId);
+ 
+ void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr);
+ 
+ bool _nm_isSkuIdPurchased(char* skuId);
+ */
 
 }

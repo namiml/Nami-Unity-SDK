@@ -75,4 +75,20 @@ void _nm_registerAvailableCampaignsHandler(void* availableCampaignsCallbackPtr){
     }];
 }
 
+/* TODO
+bool _nm_isLoggedIn();
+
+char* _nm_journeyState();
+
+char* _nm_loggedInId();
+
+void _nm_login(string withId);
+
+void _nm_logout();
+
+void _nm_registerAccountStateHandler(IntPtr accountStateCallbackPtr);
+
+void _nm_registerJourneyStateHandler(IntPtr journeyStateCallbackPtr);
+*/
+
 }

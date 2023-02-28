@@ -82,13 +82,24 @@ char* _nm_journeyState();
 
 char* _nm_loggedInId();
 
-void _nm_login(string withId);
+void _nm_login(char* withId);
 
 void _nm_logout();
 
-void _nm_registerAccountStateHandler(IntPtr accountStateCallbackPtr);
+void _nm_registerAccountStateHandler(void* accountStateCallbackPtr);
 
-void _nm_registerJourneyStateHandler(IntPtr journeyStateCallbackPtr);
+void _nm_registerJourneyStateHandler(void* journeyStateCallbackPtr);
+*/
+
+/* TODO
+char* _nm_active();
+
+bool _nm_isEntitlementActive(char* referenceId);
+
+void _nm_refresh(void* refreshCallbackPtr);
+
+void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr);
+*/
 */
 
 }

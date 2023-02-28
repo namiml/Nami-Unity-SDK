@@ -110,6 +110,13 @@ void _nm_registerBuySkuHandler(void* buySkuCallbackPtr);
 
 void _nm_buySkuComplete(char* purchase, char* skuRefId);
 */
+
+/* TODO
+void _nm_consumePurchasedSku(char* skuId);
+
+void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr);
+
+bool _nm_isSkuIdPurchased(char* skuId);
 */
 
 }

@@ -160,15 +160,30 @@ void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr){
     }];
 }
 
-/* TODO
- void _nm_registerCloseHandler(void* closeCallbackPtr);
- 
- void _nm_registerSignInHandler(void* signInCallbackPtr);
- 
- void _nm_registerBuySkuHandler(void* buySkuCallbackPtr);
- 
- void _nm_buySkuComplete(char* purchase, char* skuRefId);
- */
+
+void _nm_registerCloseHandler(void* closeCallbackPtr){
+    [NamiPaywallManager registerCloseHandler:^(UIViewController * paywall) {
+        StringCallback(closeCallbackPtr, NULL);
+    }];
+}
+
+void _nm_registerSignInHandler(void* signInCallbackPtr){
+    [NamiPaywallManager registerSignInHandler:^(UIViewController * paywall) {
+        StringCallback(signInCallbackPtr, NULL);
+    }];
+}
+
+void _nm_registerBuySkuHandler(void* buySkuCallbackPtr){
+    [NamiPaywallManager registerBuySkuHandler:^(UIViewController * paywall, NamiSKU * sku) {
+        NSString* skuRefId = [sku id];
+        StringCallback(buySkuCallbackPtr, [NamiUtils createCStringFrom:skuRefId]);
+    }];
+}
+
+void _nm_buySkuComplete(char* purchase, char* skuRefId){
+    // TODO
+}
+
 
 /* TODO
  void _nm_consumePurchasedSku(char* skuId);

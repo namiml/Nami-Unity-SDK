@@ -18,5 +18,6 @@
 + (NSMutableArray *)serializeNamiPurchaseArray:(NSArray<NamiPurchase *> *)purchases;
 + (NSDictionary *)serializeNamiCampaign:(NamiCampaign *)campaign;
 + (NSMutableArray *)serializeNamiCampaignArray:(NSArray<NamiCampaign *> *)campaigns;
++ (NSDictionary *)serializeCustomerJourneyState:(CustomerJourneyState *)journetState;
 
 @end

@@ -75,21 +75,56 @@ void _nm_registerAvailableCampaignsHandler(void* availableCampaignsCallbackPtr){
     }];
 }
 
-/* TODO
-bool _nm_isLoggedIn();
+bool _nm_isLoggedIn(){
+    return [NamiCustomerManager isLoggedIn];
+}
 
-char* _nm_journeyState();
+char* _nm_journeyState(){
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    dictionary[@"journeyState"] = [NamiJsonUtils serializeCustomerJourneyState:[NamiCustomerManager journeyState]];
+    NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+    
+    return [NamiUtils createCStringFrom:serializedDictionary];
+}
 
-char* _nm_loggedInId();
+char* _nm_loggedInId(){
+    NSString* loggedInId = [NamiCustomerManager loggedInId];
+    return [NamiUtils createCStringFrom:loggedInId];
+}
 
-void _nm_login(char* withId);
+void _nm_login(char* withId){
+    [NamiCustomerManager loginWithId:[NamiUtils createNSStringFrom:withId] loginCompleteHandler:^(BOOL success, NSError * error) {
+    }];
+}
 
-void _nm_logout();
+void _nm_logout(){
+    [NamiCustomerManager logoutWithLogoutCompleteHandler:^(BOOL success, NSError * error) {
+    }];
+}
 
-void _nm_registerAccountStateHandler(void* accountStateCallbackPtr);
+void _nm_registerAccountStateHandler(void* accountStateCallbackPtr){
+    [NamiCustomerManager registerAccountStateHandler:^(enum AccountStateAction accountStateAction, BOOL success, NSError * error) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"accountStateAction"] = @(accountStateAction);
+        dictionary[@"success"] = @(success);
+        dictionary[@"error"] = [error localizedDescription];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(accountStateCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
 
-void _nm_registerJourneyStateHandler(void* journeyStateCallbackPtr);
-*/
+void _nm_registerJourneyStateHandler(void* journeyStateCallbackPtr){
+    [NamiCustomerManager registerJourneyStateHandler:^(CustomerJourneyState * journeyState) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"journeyState"] = [NamiJsonUtils serializeCustomerJourneyState:journeyState];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(journeyStateCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
 
 /* TODO
 char* _nm_active();

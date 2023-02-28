@@ -174,4 +174,19 @@
     return array;
 }
 
++ (NSDictionary *)serializeCustomerJourneyState:(CustomerJourneyState *)journetState{
+    if (journetState == NULL){
+        return NULL;
+    }
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    dictionary[@"formerSubscriber"] = @([journetState formerSubscriber]);
+    dictionary[@"inGracePeriod"] = @([journetState inGracePeriod]);
+    dictionary[@"inTrialPeriod"] = @([journetState inTrialPeriod]);
+    dictionary[@"inIntroOfferPeriod"] = @([journetState inIntroOfferPeriod]);
+    dictionary[@"isCancelled"] = @([journetState isCancelled]);
+    dictionary[@"inPause"] = @([journetState inPause]);
+    dictionary[@"inAccountHold"] = @([journetState inAccountHold]);
+    return dictionary;
+}
+
 @end

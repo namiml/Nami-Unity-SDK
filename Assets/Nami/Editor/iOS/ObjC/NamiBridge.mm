@@ -160,10 +160,18 @@ void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr){
     }];
 }
 
+void _nm_dismiss(bool animated, void* completionCallbackPtr){
+    [NamiPaywallManager dismissWithAnimated:animated completion:^{
+        StringCallback(completionCallbackPtr, NULL);
+    }];
+}
 
 void _nm_registerCloseHandler(void* closeCallbackPtr){
     [NamiPaywallManager registerCloseHandler:^(UIViewController * paywall) {
         StringCallback(closeCallbackPtr, NULL);
+        
+        [NamiPaywallManager dismissWithAnimated:true completion:^{
+        }];
     }];
 }
 
@@ -183,8 +191,6 @@ void _nm_registerBuySkuHandler(void* buySkuCallbackPtr){
 void _nm_buySkuComplete(char* purchase, char* skuRefId){
     // TODO
 }
-
-
 
 void _nm_consumePurchasedSku(char* skuId){
     [NamiPurchaseManager consumePurchasedSkuWithSkuId:[NamiUtils createNSStringFrom:skuId]];
@@ -206,6 +212,38 @@ void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr){
 
 bool _nm_isSkuIdPurchased(char* skuId){
     return [NamiPurchaseManager skuPurchased:[NamiUtils createNSStringFrom:skuId]];
+}
+
+void _nm_presentCodeRedemptionSheet(){
+    [NamiPurchaseManager presentCodeRedemptionSheet];
+}
+
+void _nm_registerRestorePurchasesHandler(void* restorePurchasesCallbackPtr){
+    [NamiPurchaseManager registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:^(enum NamiRestorePurchasesState restorePurchaseState, NSArray<NamiPurchase *> * newPurchases, NSArray<NamiPurchase *> * oldPurchases, NSError * error) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"restorePurchaseState"] = @(restorePurchaseState);
+        dictionary[@"newPurchases"] = [NamiJsonUtils serializeNamiPurchaseArray:newPurchases];
+        dictionary[@"oldPurchases"] = [NamiJsonUtils serializeNamiPurchaseArray:oldPurchases];
+        dictionary[@"error"] = [error localizedDescription];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
+}
+
+void _nm_restorePurchases(void* restorePurchasesCallbackPtr){
+    [NamiPurchaseManager restorePurchasesWithStatehandler:^(enum NamiRestorePurchasesState restorePurchaseState, NSArray<NamiPurchase *> * newPurchases, NSArray<NamiPurchase *> * oldPurchases, NSError * error) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"restorePurchaseState"] = @(restorePurchaseState);
+        dictionary[@"newPurchases"] = [NamiJsonUtils serializeNamiPurchaseArray:newPurchases];
+        dictionary[@"oldPurchases"] = [NamiJsonUtils serializeNamiPurchaseArray:oldPurchases];
+        dictionary[@"error"] = [error localizedDescription];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+    }];
 }
 
 }

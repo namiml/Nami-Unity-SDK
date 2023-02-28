@@ -38,5 +38,10 @@ namespace NamiSdk
         {
             Impl.BuySkuComplete(purchase, skuRefId);
         }
+
+        public static void Dismiss(bool animated = true, Action completionCallback = null)
+        {
+            Impl.Dismiss(animated, completionCallback);
+        }
     }
 }

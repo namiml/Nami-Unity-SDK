@@ -2,6 +2,7 @@ using System;
 using NamiSdk.Interfaces;
 using NamiSdk.Utils;
 using NamiSdk.Proxy;
+using UnityEngine;
 
 namespace NamiSdk.Implementation
 {
@@ -34,6 +35,11 @@ namespace NamiSdk.Implementation
         {
             // TODO implement Purchase variable
             // JavaClassNames.NamiPaywallManager.AJCCallStaticOnce("buySkuComplete", JniToolkitUtils.Activity, purchase, skuRefId);
+        }
+
+        public void Dismiss(bool animated, Action completionCallback)
+        {
+            Debug.LogError("You can use NamiPaywallManager.Dismiss only for iOS platforms.");
         }
     }
 }

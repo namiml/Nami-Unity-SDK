@@ -42,6 +42,15 @@ namespace NamiSdk.Implementation
             _nm_buySkuComplete(purchase, skuRefId);
         }
 
+        public void Dismiss(bool animated, Action completionCallback)
+        {
+            _nm_dismiss(animated,
+                completionCallback == null ? IntPtr.Zero : Callbacks.New(data =>
+                {
+                    completionCallback.Invoke();
+                }));
+        }
+
         [DllImport("__Internal")]
         private static extern void _nm_registerCloseHandler(IntPtr closeCallbackPtr);
 
@@ -53,5 +62,8 @@ namespace NamiSdk.Implementation
 
         [DllImport("__Internal")]
         private static extern void _nm_buySkuComplete(string purchase, string skuRefId);
+
+        [DllImport("__Internal")]
+        private static extern void _nm_dismiss(bool animated, IntPtr completionCallbackPtr);
     }
 }

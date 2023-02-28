@@ -22,5 +22,9 @@ namespace NamiSdk.Implementation
         public void BuySkuComplete(string purchase, string skuRefId)
         {
         }
+
+        public void Dismiss(bool animated, Action completionCallback)
+        {
+        }
     }
 }

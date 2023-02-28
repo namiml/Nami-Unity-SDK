@@ -34,5 +34,20 @@ namespace NamiSdk
         {
             return Impl.IsSkuIdPurchased(skuId);
         }
+
+        public static void PresentCodeRedemptionSheet()
+        {
+            Impl.PresentCodeRedemptionSheet();
+        }
+
+        public static void RegisterRestorePurchasesHandler(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            Impl.RegisterRestorePurchasesHandler(restorePurchasesCallback);
+        }
+
+        public static void RestorePurchases(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            Impl.RestorePurchases(restorePurchasesCallback);
+        }
     }
 }

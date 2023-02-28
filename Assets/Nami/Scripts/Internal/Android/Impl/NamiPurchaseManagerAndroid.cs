@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NamiSdk.Interfaces;
 using NamiSdk.Utils;
 using NamiSdk.Proxy;
+using UnityEngine;
 
 namespace NamiSdk.Implementation
 {
@@ -29,6 +30,21 @@ namespace NamiSdk.Implementation
         public bool IsSkuIdPurchased(string skuId)
         {
             return JavaClassNames.NamiPurchaseManager.AJCCallStaticOnce<bool>("isSKUIDPurchased", skuId);
+        }
+
+        public void PresentCodeRedemptionSheet()
+        {
+            Debug.LogError("You can use NamiPurchaseManager.PresentCodeRedemptionSheet only for iOS platforms.");
+        }
+
+        public void RegisterRestorePurchasesHandler(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            Debug.LogError("You can use NamiPurchaseManager.RegisterRestorePurchasesHandler only for iOS platforms.");
+        }
+
+        public void RestorePurchases(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            Debug.LogError("You can use NamiPurchaseManager.RestorePurchases only for iOS platforms.");
         }
     }
 }

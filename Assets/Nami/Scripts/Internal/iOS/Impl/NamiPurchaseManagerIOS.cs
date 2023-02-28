@@ -45,6 +45,68 @@ namespace NamiSdk.Implementation
             return _nm_isSkuIdPurchased(skuId);
         }
 
+        public void PresentCodeRedemptionSheet()
+        {
+            _nm_presentCodeRedemptionSheet();
+        }
+
+        public void RegisterRestorePurchasesHandler(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            if (restorePurchasesCallback == null) return;
+            _nm_registerRestorePurchasesHandler(
+                Callbacks.New(data =>
+                {
+                    RestorePurchasesState restorePurchaseState = default;
+                    List<NamiPurchase> newPurchases = null;
+                    List<NamiPurchase> oldPurchases = null;
+                    string error = null;
+
+                    var dictionary = Json.DeserializeDictionary(data);
+                    if (dictionary != null)
+                    {
+                        dictionary.TryGetValue("restorePurchaseState", out var restorePurchaseStateObject);
+                        dictionary.TryGetValue("newPurchases", out var newPurchasesObject);
+                        dictionary.TryGetValue("oldPurchases", out var oldPurchasesObject);
+                        dictionary.TryGetValue("error", out var errorObject);
+
+                        if (restorePurchaseStateObject != null) restorePurchaseState = (RestorePurchasesState)(long)restorePurchaseStateObject;
+                        newPurchases = Json.DeserializeList(newPurchasesObject)?.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
+                        oldPurchases = Json.DeserializeList(oldPurchasesObject)?.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
+                        error = (string)errorObject;
+                    }
+
+                    restorePurchasesCallback.Invoke(restorePurchaseState, newPurchases, oldPurchases, error);
+                }));
+        }
+
+        public void RestorePurchases(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+            _nm_restorePurchases(
+                restorePurchasesCallback == null ? IntPtr.Zero : Callbacks.New(data =>
+                {
+                    RestorePurchasesState restorePurchaseState = default;
+                    List<NamiPurchase> newPurchases = null;
+                    List<NamiPurchase> oldPurchases = null;
+                    string error = null;
+
+                    var dictionary = Json.DeserializeDictionary(data);
+                    if (dictionary != null)
+                    {
+                        dictionary.TryGetValue("restorePurchaseState", out var restorePurchaseStateObject);
+                        dictionary.TryGetValue("newPurchases", out var newPurchasesObject);
+                        dictionary.TryGetValue("oldPurchases", out var oldPurchasesObject);
+                        dictionary.TryGetValue("error", out var errorObject);
+
+                        if (restorePurchaseStateObject != null) restorePurchaseState = (RestorePurchasesState)(long)restorePurchaseStateObject;
+                        newPurchases = Json.DeserializeList(newPurchasesObject)?.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
+                        oldPurchases = Json.DeserializeList(oldPurchasesObject)?.Select(jsonObject => new NamiPurchase(jsonObject)).ToList();
+                        error = (string)errorObject;
+                    }
+
+                    restorePurchasesCallback.Invoke(restorePurchaseState, newPurchases, oldPurchases, error);
+                }));
+        }
+
         [DllImport("__Internal")]
         private static extern void _nm_consumePurchasedSku(string skuId);
 
@@ -53,5 +115,14 @@ namespace NamiSdk.Implementation
 
         [DllImport("__Internal")]
         private static extern bool _nm_isSkuIdPurchased(string skuId);
+
+        [DllImport("__Internal")]
+        private static extern void _nm_presentCodeRedemptionSheet();
+
+        [DllImport("__Internal")]
+        private static extern void _nm_registerRestorePurchasesHandler(IntPtr restorePurchasesCallbackPtr);
+
+        [DllImport("__Internal")]
+        private static extern void _nm_restorePurchases(IntPtr restorePurchasesCallbackPtr);
     }
 }

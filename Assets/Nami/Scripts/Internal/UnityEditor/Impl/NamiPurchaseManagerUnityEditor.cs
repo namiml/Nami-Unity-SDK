@@ -20,5 +20,17 @@ namespace NamiSdk.Implementation
         {
             return default;
         }
+
+        public void PresentCodeRedemptionSheet()
+        {
+        }
+
+        public void RegisterRestorePurchasesHandler(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+        }
+
+        public void RestorePurchases(Action<RestorePurchasesState, List<NamiPurchase>, List<NamiPurchase>, string> restorePurchasesCallback)
+        {
+        }
     }
 }

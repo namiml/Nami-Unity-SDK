@@ -100,6 +100,16 @@ void _nm_refresh(void* refreshCallbackPtr);
 
 void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr);
 */
+
+/* TODO
+void _nm_registerCloseHandler(void* closeCallbackPtr);
+
+void _nm_registerSignInHandler(void* signInCallbackPtr);
+
+void _nm_registerBuySkuHandler(void* buySkuCallbackPtr);
+
+void _nm_buySkuComplete(char* purchase, char* skuRefId);
+*/
 */
 
 }

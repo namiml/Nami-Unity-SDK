@@ -185,12 +185,27 @@ void _nm_buySkuComplete(char* purchase, char* skuRefId){
 }
 
 
-/* TODO
- void _nm_consumePurchasedSku(char* skuId);
- 
- void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr);
- 
- bool _nm_isSkuIdPurchased(char* skuId);
- */
+
+void _nm_consumePurchasedSku(char* skuId){
+    [NamiPurchaseManager consumePurchasedSkuWithSkuId:[NamiUtils createNSStringFrom:skuId]];
+}
+
+void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr){
+    [NamiPurchaseManager registerPurchasesChangedHandler:^(NSArray<NamiPurchase *> * purchases, enum NamiPurchaseState purchaseState, NSError * error) {
+        
+        NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+        dictionary[@"purchases"] = [NamiJsonUtils serializeNamiPurchaseArray:purchases];
+        dictionary[@"purchaseState"] = @(purchaseState);
+        dictionary[@"error"] = [error localizedDescription];
+        NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
+        
+        StringCallback(purchasesChangedCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        
+    }];
+}
+
+bool _nm_isSkuIdPurchased(char* skuId){
+    return [NamiPurchaseManager skuPurchased:[NamiUtils createNSStringFrom:skuId]];
+}
 
 }

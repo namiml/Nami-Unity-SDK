@@ -16,15 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NamiBridge {
-    public static void setSettingsListHack(NamiConfiguration.Builder builder) {
-        List<String> settings = new ArrayList<>();
-        settings.add("useStagingAPI");
-
-        Field field = null;
+    public static void settingsListHack(NamiConfiguration.Builder builder, List<String> settingsList) {
         try {
-            field = builder.getClass().getDeclaredField("settingsList");
+            Field field = builder.getClass().getDeclaredField("settingsList");
             field.setAccessible(true);
-            field.set(builder, settings);
+            field.set(builder, settingsList);
         } catch (Exception e) {
             e.printStackTrace();
         }

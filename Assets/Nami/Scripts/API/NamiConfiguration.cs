@@ -96,7 +96,7 @@ namespace NamiSdk
                 ajo.CallAJO("developmentMode", developmentMode);
                 ajo.CallAJO("logLevel", logLevel.EnumToJava(JavaEnumNames.NamiLogLevel));
                 if (namiLanguageCode != null) ajo.CallAJO("namiLanguageCode", ((NamiLanguageCode)namiLanguageCode).EnumToJava(JavaEnumNames.NamiLanguageCode));
-                JavaClassNames.NamiBridge.AJCCallStaticOnce("setSettingsListHack", ajo); // TODO
+                if (settingsList != null) JavaClassNames.NamiBridge.AJCCallStaticOnce("settingsListHack", ajo, settingsList.ToJavaList());
                 return ajo.CallAJO("build");
             }
         }

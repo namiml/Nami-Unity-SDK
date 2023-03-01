@@ -22,6 +22,22 @@ namespace NamiSdk.Proxy
             _onLaunchPurchaseChangedCallback = onLaunchPurchaseChangedCallback;
         }
 
+#if UNITY_ANDROID
+        public OnLaunchCampaignListenerProxy(LaunchHandler launchHandler, PaywallActionHandler paywallActionHandler) : base("com.namiml.unity.OnLaunchCampaignListener")
+        {
+            if (launchHandler != null)
+            {
+                _onLaunchSuccessCallback = launchHandler.OnSuccessCallback;
+                _onLaunchFailureCallback = launchHandler.OnFailureCallback;
+                _onLaunchPurchaseChangedCallback = launchHandler.OnPurchaseChangedCallback;
+            }
+            if (paywallActionHandler != null)
+            {
+                _paywallActionCallback = paywallActionHandler.OnPaywallActionCallback;
+            }
+        }
+#endif
+
         [UsedImplicitly]
         void onNamiPaywallAction(AndroidJavaObject namiPaywallAction, AndroidJavaObject sku)
         {

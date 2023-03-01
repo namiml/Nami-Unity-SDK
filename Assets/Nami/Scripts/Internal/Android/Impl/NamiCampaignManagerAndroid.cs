@@ -23,9 +23,8 @@ namespace NamiSdk.Implementation
         {
             JniToolkitUtils.RunOnUiThread(() =>
             {
-                // TODO Handlers Proxy Implementation
-                //var launchListener = new OnLaunchCampaignListenerProxy(paywallActionCallback, onLaunchSuccessCallback, onLaunchFailureCallback, onLaunchPurchaseChangedCallback);
-                //JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity, label, launchListener);
+                var launchListener = new OnLaunchCampaignListenerProxy(launchHandler, paywallActionHandler);
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity, label, launchListener);
             });
         }
 

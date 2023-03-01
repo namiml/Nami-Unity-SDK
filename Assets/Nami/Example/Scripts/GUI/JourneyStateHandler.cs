@@ -1,7 +1,8 @@
+using NamiSdk;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NamiSdk.Example
+namespace NamiExample
 {
     public class JourneyStateHandler : MonoBehaviour
     {

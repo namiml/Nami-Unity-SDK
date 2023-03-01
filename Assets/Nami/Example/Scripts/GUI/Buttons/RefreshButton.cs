@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using NamiSdk;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace NamiSdk.Example
+namespace NamiExample
 {
     [RequireComponent(typeof(Button))]
     public class RefreshButton : MonoBehaviour

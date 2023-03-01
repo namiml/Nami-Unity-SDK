@@ -1,3 +1,4 @@
+#if UNITY_ANDROID
 using System;
 using NamiSdk.Interfaces;
 using NamiSdk.Utils;
@@ -43,3 +44,4 @@ namespace NamiSdk.Implementation
         }
     }
 }
+#endif

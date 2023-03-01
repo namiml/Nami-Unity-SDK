@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NamiSdk.Example
+namespace NamiExample
 {
     [Serializable]
     public class Tab

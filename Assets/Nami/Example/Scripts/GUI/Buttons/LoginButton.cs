@@ -1,8 +1,9 @@
 using System;
+using NamiSdk;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace NamiSdk.Example
+namespace NamiExample
 {
     [RequireComponent(typeof(Button))]
     public class LoginButton : MonoBehaviour

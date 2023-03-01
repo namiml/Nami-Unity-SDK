@@ -1,3 +1,4 @@
+#if UNITY_IOS
 using System;
 using System.Runtime.InteropServices;
 using NamiSdk.Interfaces;
@@ -67,3 +68,4 @@ namespace NamiSdk.Implementation
         private static extern void _nm_dismiss(bool animated, IntPtr completionCallbackPtr);
     }
 }
+#endif

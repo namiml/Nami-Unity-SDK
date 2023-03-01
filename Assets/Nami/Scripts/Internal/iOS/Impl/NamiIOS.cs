@@ -1,3 +1,4 @@
+#if UNITY_IOS
 using System.Runtime.InteropServices;
 using NamiSdk.Interfaces;
 
@@ -14,3 +15,4 @@ namespace NamiSdk.Implementation
         private static extern void _nm_init(string configurationJson);
     }
 }
+#endif

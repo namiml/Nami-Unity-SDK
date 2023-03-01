@@ -1,6 +1,7 @@
+using NamiSdk;
 using UnityEngine;
 
-namespace NamiSdk.Example
+namespace NamiExample
 {
     public class NamiExample : MonoBehaviour
     {

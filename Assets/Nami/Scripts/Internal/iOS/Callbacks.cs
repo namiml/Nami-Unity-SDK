@@ -13,11 +13,6 @@ namespace NamiSdk
         [MonoPInvokeCallback(typeof(StringCallbackDelegate))]
         public static void StringCallbackWrapper(IntPtr actionPtr, string data)
         {
-            if (Debug.isDebugBuild)
-            {
-                Debug.Log("StringCallback");
-            }
-
             if (actionPtr != IntPtr.Zero)
             {
                 var action = actionPtr.Cast<Action<string>>();

@@ -4,12 +4,18 @@
 @implementation NamiJsonUtils
 
 + (NSString *)serializeArray:(NSArray *)array {
+    if (array == NULL){
+        return NULL;
+    }
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:nil error:&error];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)serializeDictionary:(NSDictionary *)dictionary {
+    if (dictionary == NULL){
+        return NULL;
+    }
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:nil error:&error];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -129,7 +135,7 @@
     dictionary[@"skuId"] = [purchase skuId];
     dictionary[@"transactionIdentifier"] = [purchase transactionIdentifier];
     dictionary[@"sku"] = [self serializeNamiSKU:[purchase sku]];
-    // dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
+    dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
     dictionary[@"transaction"] = [purchase transactionIdentifier];
     return dictionary;
 }

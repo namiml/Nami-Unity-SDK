@@ -44,7 +44,9 @@ void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbac
         dictionary[@"error"] = [error localizedDescription];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(launchCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(launchCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }
                     paywallActionHandler:^(NamiPaywallAction action, NamiSKU * sku, NSError * error, NSArray<NamiPurchase *> * purchases) {
         
@@ -59,7 +61,9 @@ void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbac
         dictionary[@"purchases"] = [NamiJsonUtils serializeNamiPurchaseArray:purchases];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(paywallActionCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(paywallActionCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
     
 }
@@ -83,7 +87,9 @@ void _nm_registerAvailableCampaignsHandler(void* availableCampaignsCallbackPtr){
         dictionary[@"campaigns"] = [NamiJsonUtils serializeNamiCampaignArray:campaigns];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(availableCampaignsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(availableCampaignsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 
@@ -144,7 +150,9 @@ void _nm_registerJourneyStateHandler(void* journeyStateCallbackPtr){
         dictionary[@"journeyState"] = [NamiJsonUtils serializeCustomerJourneyState:journeyState];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(journeyStateCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(journeyStateCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 
@@ -188,7 +196,9 @@ void _nm_registerActiveEntitlementsHandler(void* activeEntitlementsCallbackPtr){
         dictionary[@"entitlements"] = [NamiJsonUtils serializeNamiEntitlementArray:entitlements];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(activeEntitlementsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(activeEntitlementsCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 
@@ -199,7 +209,9 @@ void _nm_dismiss(bool animated, void* completionCallbackPtr){
             return;
         }
         
-        StringCallback(completionCallbackPtr, NULL);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(completionCallbackPtr, NULL);
+        });
     }];
 }
 
@@ -210,7 +222,9 @@ void _nm_registerCloseHandler(void* closeCallbackPtr){
             return;
         }
         
-        StringCallback(closeCallbackPtr, NULL);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(closeCallbackPtr, NULL);
+        });
     }];
 }
 
@@ -221,7 +235,9 @@ void _nm_registerSignInHandler(void* signInCallbackPtr){
             return;
         }
         
-        StringCallback(signInCallbackPtr, NULL);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(signInCallbackPtr, NULL);
+        });
     }];
 }
 
@@ -233,7 +249,9 @@ void _nm_registerBuySkuHandler(void* buySkuCallbackPtr){
         }
         
         NSString* skuRefId = [sku id];
-        StringCallback(buySkuCallbackPtr, [NamiUtils createCStringFrom:skuRefId]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(buySkuCallbackPtr, [NamiUtils createCStringFrom:skuRefId]);
+        });
     }];
 }
 
@@ -258,7 +276,9 @@ void _nm_registerPurchasesChangedHandler(void* purchasesChangedCallbackPtr){
         dictionary[@"error"] = [error localizedDescription];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(purchasesChangedCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(purchasesChangedCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 
@@ -284,7 +304,9 @@ void _nm_registerRestorePurchasesHandler(void* restorePurchasesCallbackPtr){
         dictionary[@"error"] = [error localizedDescription];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 
@@ -302,7 +324,9 @@ void _nm_restorePurchases(void* restorePurchasesCallbackPtr){
         dictionary[@"error"] = [error localizedDescription];
         NSString* serializedDictionary = [NamiJsonUtils serializeDictionary:dictionary];
         
-        StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            StringCallback(restorePurchasesCallbackPtr, [NamiUtils createCStringFrom:serializedDictionary]);
+        });
     }];
 }
 

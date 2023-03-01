@@ -59,13 +59,12 @@
     if (product == NULL){
         return NULL;
     }
-    NSDictionary* dictionary = @{
-        @"localizedDescription": product.localizedDescription,
-        @"localizedTitle": product.localizedTitle,
-        @"productIdentifier": product.productIdentifier,
-        @"price": [product.price stringValue],
-        @"priceLocale": product.priceLocale.localeIdentifier
-    };
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+    dictionary[@"localizedDescription"] = product.localizedDescription;
+    dictionary[@"localizedTitle"] = product.localizedTitle;
+    dictionary[@"productIdentifier"] = product.productIdentifier;
+    dictionary[@"price"] = [product.price stringValue];
+    dictionary[@"priceLocale"] = product.priceLocale.localeIdentifier;
     return dictionary;
 }
 
@@ -76,7 +75,7 @@
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     dictionary[@"name"] = [sku name];
     dictionary[@"skuId"] = [sku skuId];
-    dictionary[@"product"] = [self serializeSKProduct:[sku product]];
+    dictionary[@"product"] = [NamiJsonUtils serializeDictionary:[self serializeSKProduct:[sku product]]];
     dictionary[@"type"] = @([sku type]);
     return dictionary;
 }
@@ -130,7 +129,7 @@
     dictionary[@"skuId"] = [purchase skuId];
     dictionary[@"transactionIdentifier"] = [purchase transactionIdentifier];
     dictionary[@"sku"] = [self serializeNamiSKU:[purchase sku]];
-    dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
+    // dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
     dictionary[@"transaction"] = [purchase transactionIdentifier];
     return dictionary;
 }

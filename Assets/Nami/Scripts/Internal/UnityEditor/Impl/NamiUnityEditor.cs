@@ -1,4 +1,5 @@
 using NamiSdk.Interfaces;
+using UnityEngine;
 
 namespace NamiSdk.Implementation
 {
@@ -6,7 +7,7 @@ namespace NamiSdk.Implementation
     {
         public void Init(NamiConfiguration configuration)
         {
-            // TODO Editor implementation
+            Debug.Log("Nami.Init will be called on iOS and Android platforms.");
         }
     }
 }

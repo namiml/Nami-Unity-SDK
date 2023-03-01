@@ -53,7 +53,8 @@ public class NamiBridge {
 
     public static void registerCustomerStateHandler(OnRegisterCustomerStateListener registerListener) {
         NamiCustomerManager.registerAccountStateHandler((accountStateAction, success, namiError) -> {
-            registerListener.onRegisterAccountState(accountStateAction, success, namiError == null ? null : namiError.getErrorMessage());
+            String error = namiError == null ? null : namiError.getErrorMessage();
+            registerListener.onRegisterAccountState(accountStateAction, success, error == null ? "" : error);
             return null;
         });
         NamiCustomerManager.registerJourneyStateHandler(journeyState -> {

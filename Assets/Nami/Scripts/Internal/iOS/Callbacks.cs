@@ -1,3 +1,4 @@
+#if UNITY_IOS
 using System;
 using System.Runtime.InteropServices;
 using AOT;
@@ -30,3 +31,4 @@ namespace NamiSdk
         private static extern void _init_stringCallback(StringCallbackDelegate stringCallback);
     }
 }
+#endif

@@ -35,17 +35,17 @@ namespace NamiSdk
             }
         }
 
-        /// <summary> Apple platforms only </summary>
+        /// <summary> iOS only </summary>
         public string Id { get; private set; }
 
-        /// <summary> Apple platforms only </summary>
+        /// <summary> iOS only </summary>
         public string Rule { get; private set; }
 
         public string Paywall { get; private set; }
 
         public string Segment { get; private set; }
 
-        /// <summary> Android platforms only </summary>
+        /// <summary> Android only </summary>
         public NamiCampaignRuleType Type { get; private set; }
 
         public string Value { get; private set; }

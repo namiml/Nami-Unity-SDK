@@ -36,10 +36,10 @@ namespace NamiSdk
 
         public string SkuId { get; private set; }
 
-        /// <summary> Android platforms only </summary>
+        /// <summary> GooglePlay only </summary>
         public string SkuDetails { get; private set; }
 
-        /// <summary> Apple platforms only </summary>
+        /// <summary> Apple only </summary>
         public string Product { get; private set; }
 
         public NamiSKUType Type { get; private set; }

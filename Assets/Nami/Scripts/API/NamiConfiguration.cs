@@ -64,14 +64,14 @@ namespace NamiSdk
                 return this;
             }
 
-            /// <summary> Apple platforms only </summary>
+            /// <summary> iOS only </summary>
             public Builder FullScreenPresentation(bool fullScreenPresentation)
             {
                 this.fullScreenPresentation = fullScreenPresentation;
                 return this;
             }
 
-            /// <summary> Android platforms only </summary>
+            /// <summary> GooglePlay only </summary>
             public Builder DevelopmentMode(bool developmentMode)
             {
                 this.developmentMode = developmentMode;

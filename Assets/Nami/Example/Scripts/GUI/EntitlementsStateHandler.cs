@@ -21,7 +21,7 @@ namespace NamiExample
             UpdateEntitlements(NamiEntitlementManager.Active());
         }
 
-        private void UpdateEntitlements(List<NamiEntitlement> entitlements)
+        public void UpdateEntitlements(List<NamiEntitlement> entitlements)
         {
             foreach (var card in cardPool)
             {

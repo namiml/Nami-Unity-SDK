@@ -5,7 +5,7 @@ namespace NamiExample
 {
     public class NamiExample : MonoBehaviour
     {
-        private void Start()
+        private void Awake()
         {
             Nami.Init(new NamiConfiguration.Builder()
                 .LogLevel(NamiLogLevel.Debug)

@@ -2,10 +2,10 @@
 using System;
 using System.Runtime.InteropServices;
 using AOT;
-using NamiSdk.Utils;
+using NamiSDK.Utils;
 using UnityEngine;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     public static class Callbacks
     {

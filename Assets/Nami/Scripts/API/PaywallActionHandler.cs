@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NamiSdk
+namespace NamiSDK
 {
 	public class PaywallActionHandler
 	{

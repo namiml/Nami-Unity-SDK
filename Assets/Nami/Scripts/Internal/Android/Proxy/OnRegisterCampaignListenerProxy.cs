@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using NamiSdk.Utils;
+using NamiSDK.Utils;
 using UnityEngine;
 
-namespace NamiSdk.Proxy
+namespace NamiSDK.Proxy
 {
     public class OnRegisterCampaignListenerProxy : AndroidJavaProxy
     {

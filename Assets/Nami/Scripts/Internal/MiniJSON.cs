@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace NamiSdk.MiniJSON {
+namespace NamiSDK.MiniJSON {
     // Example usage:
     //
     //  using UnityEngine;

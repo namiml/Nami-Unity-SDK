@@ -1,7 +1,7 @@
-using NamiSdk.Implementation;
-using NamiSdk.Interfaces;
+using NamiSDK.Implementation;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     public static class Nami
     {
@@ -9,7 +9,7 @@ namespace NamiSdk
 
         static Nami()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
             Impl = new NamiUnityEditor();
 #elif UNITY_ANDROID
             Impl = new NamiAndroid();

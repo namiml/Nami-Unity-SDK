@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NamiSdk.Utils
+namespace NamiSDK.Utils
 {
 	public static class IntPtrUtils
 	{

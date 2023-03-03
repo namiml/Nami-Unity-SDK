@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NamiSdk.Interfaces;
-using NamiSdk.Utils;
-using NamiSdk.Proxy;
+using NamiSDK.Interfaces;
+using NamiSDK.Utils;
+using NamiSDK.Proxy;
 using UnityEngine;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiEntitlementManagerAndroid : INamiEntitlementManager
     {

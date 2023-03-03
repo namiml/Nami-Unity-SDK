@@ -1,7 +1,7 @@
-using NamiSdk.Interfaces;
+using NamiSDK.Interfaces;
 using UnityEngine;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiUnityEditor : INami
     {

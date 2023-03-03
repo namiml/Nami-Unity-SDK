@@ -1,8 +1,8 @@
 #if UNITY_ANDROID
-using NamiSdk.Interfaces;
-using NamiSdk.Utils;
+using NamiSDK.Interfaces;
+using NamiSDK.Utils;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiAndroid : INami
     {

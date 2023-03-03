@@ -1,6 +1,6 @@
 using System;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     [Serializable]
     public enum LaunchCampaignError

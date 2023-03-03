@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NamiSdk.Settings;
-using NamiSdk.Utils;
+using NamiSDK.Utils;
 using UnityEngine;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     [Serializable]
     public class NamiConfiguration
@@ -36,7 +35,7 @@ namespace NamiSdk
             private bool bypassStore = false;
             private bool fullScreenPresentation = false;
             private bool developmentMode = false;
-            private NamiLanguageCode? namiLanguageCode = Application.platform == RuntimePlatform.Android ? (NamiLanguageCode?)null : NamiSdk.NamiLanguageCode.EN;
+            private NamiLanguageCode? namiLanguageCode = Application.platform == RuntimePlatform.Android ? (NamiLanguageCode?)null : NamiSDK.NamiLanguageCode.EN;
             private List<string> settingsList = new List<string>();
 
             /// <param name="appPlatformId">leave this parameter empty to use the Target Platform ID from NamiSettings.</param>

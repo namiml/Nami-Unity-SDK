@@ -5,7 +5,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
-namespace NamiSdk
+namespace NamiSDK
 {
 	public static class NamiProjectPostProcessor
 	{

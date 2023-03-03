@@ -1,4 +1,4 @@
-using NamiSdk;
+using NamiSDK;
 using UnityEngine;
 
 namespace NamiExample

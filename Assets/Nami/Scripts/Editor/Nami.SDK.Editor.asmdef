@@ -1,0 +1,16 @@
+{
+    "name": "Nami.SDK.Editor",
+    "rootNamespace": "NamiSDK.Editor",
+    "references": ["GUID:9846b1bd8c9605548ae5d3f92a184e67"],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

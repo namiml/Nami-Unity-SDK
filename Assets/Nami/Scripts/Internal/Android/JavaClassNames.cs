@@ -1,4 +1,4 @@
-namespace NamiSdk
+namespace NamiSDK
 {
     public class JavaClassNames
     {

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using NamiSdk.Interfaces;
-using NamiSdk.MiniJSON;
+using NamiSDK.Interfaces;
+using NamiSDK.MiniJSON;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiCustomerManagerIOS : INamiCustomerManager
     {

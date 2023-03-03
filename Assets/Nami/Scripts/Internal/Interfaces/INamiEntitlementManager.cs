@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NamiSdk.Interfaces
+namespace NamiSDK.Interfaces
 {
     public interface INamiEntitlementManager
     {

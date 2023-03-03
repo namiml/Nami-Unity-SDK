@@ -1,7 +1,7 @@
 using System;
-using NamiSdk.Interfaces;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiPaywallManagerUnityEditor : INamiPaywallManager
     {

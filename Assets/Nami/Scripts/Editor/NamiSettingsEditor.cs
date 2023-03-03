@@ -1,10 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace NamiSdk.Settings
+namespace NamiSDK.Editor
 {
 	[CustomEditor(typeof(NamiSettings))]
-	public class NamiSettingsEditor : Editor
+	public class NamiSettingsEditor : UnityEditor.Editor
 	{
 		[MenuItem("Window/Nami/Edit Settings", false, 1000)]
 		public static void Edit()

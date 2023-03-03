@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using NamiSdk.Interfaces;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiPurchaseManagerUnityEditor : INamiPurchaseManager
     {

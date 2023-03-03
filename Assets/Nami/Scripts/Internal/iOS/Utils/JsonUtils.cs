@@ -1,6 +1,6 @@
 using System;
 
-namespace NamiSdk.Utils
+namespace NamiSDK.Utils
 {
 	public static class JsonUtils
 	{

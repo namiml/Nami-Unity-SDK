@@ -1,8 +1,8 @@
 #if UNITY_IOS
 using System.Runtime.InteropServices;
-using NamiSdk.Interfaces;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiIOS : INami
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NamiSdk.MiniJSON;
-using NamiSdk.Utils;
+using NamiSDK.MiniJSON;
+using NamiSDK.Utils;
 using UnityEngine;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     public class NamiPurchase
     {

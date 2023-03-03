@@ -1,9 +1,9 @@
 using System;
 using JetBrains.Annotations;
-using NamiSdk.Utils;
+using NamiSDK.Utils;
 using UnityEngine;
 
-namespace NamiSdk.Proxy
+namespace NamiSDK.Proxy
 {
     public class OnRegisterCustomerStateListenerProxy : AndroidJavaProxy
     {

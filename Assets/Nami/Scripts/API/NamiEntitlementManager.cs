@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using NamiSdk.Implementation;
-using NamiSdk.Interfaces;
+using NamiSDK.Implementation;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     public static class NamiEntitlementManager
     {
@@ -11,7 +11,7 @@ namespace NamiSdk
 
         static NamiEntitlementManager()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
             Impl = new NamiEntitlementManagerUnityEditor();
 #elif UNITY_ANDROID
             Impl = new NamiEntitlementManagerAndroid();

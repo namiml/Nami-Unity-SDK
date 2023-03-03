@@ -1,8 +1,8 @@
 using System;
-using NamiSdk.Implementation;
-using NamiSdk.Interfaces;
+using NamiSDK.Implementation;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk
+namespace NamiSDK
 {
     public static class NamiCustomerManager
     {
@@ -10,7 +10,7 @@ namespace NamiSdk
 
         static NamiCustomerManager()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
             Impl = new NamiCustomerManagerUnityEditor();
 #elif UNITY_ANDROID
             Impl = new NamiCustomerManagerAndroid();

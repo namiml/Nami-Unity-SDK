@@ -1,9 +1,9 @@
 #if UNITY_IOS
 using System;
 using System.Runtime.InteropServices;
-using NamiSdk.Interfaces;
+using NamiSDK.Interfaces;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiPaywallManagerIOS : INamiPaywallManager
     {

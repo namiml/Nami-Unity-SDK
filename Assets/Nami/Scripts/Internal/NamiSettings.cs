@@ -4,7 +4,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace NamiSdk.Settings
+namespace NamiSDK
 {
     public class NamiSettings : ScriptableObject
     {

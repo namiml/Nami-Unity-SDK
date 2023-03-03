@@ -1,12 +1,12 @@
 #if UNITY_ANDROID
 using System;
 using System.Collections.Generic;
-using NamiSdk.Interfaces;
-using NamiSdk.Utils;
-using NamiSdk.Proxy;
+using NamiSDK.Interfaces;
+using NamiSDK.Utils;
+using NamiSDK.Proxy;
 using UnityEngine;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiPurchaseManagerAndroid : INamiPurchaseManager
     {

@@ -1,5 +1,5 @@
 
-namespace NamiSdk
+namespace NamiSDK
 {
 	using System;
 	using System.Collections.Generic;

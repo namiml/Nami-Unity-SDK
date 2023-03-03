@@ -1,10 +1,10 @@
 #if UNITY_ANDROID
 using System;
-using NamiSdk.Interfaces;
-using NamiSdk.Utils;
-using NamiSdk.Proxy;
+using NamiSDK.Interfaces;
+using NamiSDK.Utils;
+using NamiSDK.Proxy;
 
-namespace NamiSdk.Implementation
+namespace NamiSDK.Implementation
 {
     public class NamiCustomerManagerAndroid : INamiCustomerManager
     {

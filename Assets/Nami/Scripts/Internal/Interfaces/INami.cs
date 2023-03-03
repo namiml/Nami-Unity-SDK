@@ -1,4 +1,4 @@
-namespace NamiSdk.Interfaces
+namespace NamiSDK.Interfaces
 {
     public interface INami
     {

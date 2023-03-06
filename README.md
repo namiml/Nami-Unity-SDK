@@ -14,7 +14,7 @@ Unity 2020.3.44f1+
 
 ## Installation
 
-Download latest version of Nami Unity SDK (.unitypackage). In Unity editor right click inside Project pane and select Import package -> Custom package. Select file you've downloaded and confirm. Now Nami Unity SDK should be ready to use.
+In Unity editor open Package Manager (`Window` -> `Package Manager`) and click on `+` icon -> `Add package from git URL...`. Past the link `https://github.com/NinevaStudios/com.nami.sdk.git` there and click `Add`. Wait until the installation is complete. Now Nami Unity SDK should be ready to use.
 
 ## Configuration
 

@@ -12,7 +12,7 @@ namespace NamiSDK
         public const string GOOGLE_ID_PLACEHOLDER = "ff5679b3-3215-4ec4-b186-2ea78c9e9d94";
 
         private const string SettingsAssetName = "NamiSettings";
-        private const string SettingsAssetPath = "Resources/";
+        private const string SettingsAssetPath = "Assets/Resources/";
 
         [SerializeField] private string appleId = APPLE_ID_PLACEHOLDER;
         [SerializeField] private string googleId = GOOGLE_ID_PLACEHOLDER;
@@ -53,46 +53,13 @@ namespace NamiSDK
                     _instance = Resources.Load(SettingsAssetName) as NamiSettings;
                     if (_instance == null)
                     {
-                        _instance = CreateInstance<NamiSettings>();
-
-                        SaveAsset(Path.Combine(GetPluginPath(), SettingsAssetPath), SettingsAssetName);
+                        _instance = CreateInstance<NamiSettings>(); 
+                        SaveAsset(SettingsAssetPath, SettingsAssetName);
                     }
                 }
 
                 return _instance;
             }
-        }
-
-        public static string GetPluginPath()
-        {
-            return GetAbsolutePluginPath().Replace("\\", "/").Replace(Application.dataPath, "Assets");
-        }
-
-        private static string GetAbsolutePluginPath()
-        {
-            return Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(FindEditor(Application.dataPath))));
-        }
-
-        private static string FindEditor(string path)
-        {
-            foreach (var d in Directory.GetDirectories(path))
-            {
-                foreach (var f in Directory.GetFiles(d))
-                {
-                    if (f.Contains("NamiSettingsEditor.cs"))
-                    {
-                        return f;
-                    }
-                }
-
-                var rec = FindEditor(d);
-                if (rec != null)
-                {
-                    return rec;
-                }
-            }
-
-            return null;
         }
 
         private static void SaveAsset(string directory, string name)

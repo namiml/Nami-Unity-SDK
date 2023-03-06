@@ -1,0 +1,18 @@
+{
+    "name": "Nami.Example",
+    "rootNamespace": "NamiExample",
+    "references": ["GUID:9846b1bd8c9605548ae5d3f92a184e67"],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

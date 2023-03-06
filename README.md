@@ -12,13 +12,30 @@ You can use Nami Unity SDK to provide the features for you Unity app.
 
 Unity 2020.3.44f1+
 
+### iOS Requirements
+
+- iOS 13+
+- iPadOS 13+
+- Xcode 12+
+
+### Android Requirements
+
+- Android SDK minimum version 25
+- SDK builds target Android 13 (API version 33)
+- SDK has been built with Java v8 and Kotlin v1.6.10
+
 ## Installation
 
-In Unity editor open Package Manager (`Window` -> `Package Manager`) and click on `+` icon -> `Add package from git URL...`. Past the link `https://github.com/NinevaStudios/com.nami.sdk.git` there and click `Add`. Wait until the installation is complete. Now Nami Unity SDK should be ready to use.
+1. Install the package `https://github.com/NinevaStudios/com.nami.sdk.git` via the [Unity Package Manager using a Git URL](https://docs.unity3d.com/Manual/upm-ui-giturl.html).
+2. (Android only) Enable `Custom Main Gradle Template` and `Custom Gradle Properties Template` in Project Settings -> Player -> Publishing Settings.
+3. Setup [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) and run resolver for your target platform.
+4. (Android only) In Project folder go to Plugin -> Android -> `gradleTemplate.properties` and add the property `android.useAndroidX=true` there.
+
+Now Nami Unity SDK should be ready to use.
 
 ## Configuration
 
-In Unity editor go to Window -> Nami -> Edit Settings and enter your app platform id.
+In Unity editor go to `Window` -> `Nami` -> `Edit Settings` and enter your app platform id.
 
 ## Usage
 

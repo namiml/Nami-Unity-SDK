@@ -77,13 +77,13 @@ Launch a live campaign in your app and show the associated paywall.
 - launchHandler - this can be used to know if the launch succeeded or failed to raise a paywall.
 - paywallActionHandler - use this to monitor user interactions with the paywall raised by this campaign launch. 
 
-```
+```csharp
 NamiCampaignManager.Launch(label);
 ```
 
 Callback handlers example for Android platforms:
 
-```
+```csharp
 var launchHandler = new LaunchHandler(() =>
 {
     // on success
@@ -105,7 +105,7 @@ NamiCampaignManager.Launch(label, launchHandler, paywallActionHandler);
 
 Callback handlers example for iOS platforms:
 
-```
+```csharp
 var launchHandler = new LaunchHandler((isSuccess, errorMsg) =>
 {
     // on launch
@@ -138,7 +138,7 @@ The campaign object represents the live campaigns configured in the Nami Control
 - Type (Android only)
 - Value
 
-```
+```csharp
 // returns a list of campaigns that are available to for the device.
 
 var campaigns = NamiCampaignManager.AllCampaigns();
@@ -151,21 +151,21 @@ The ID sent to Nami must be a valid UUID or you may hash any other identifier wi
 #### Parameters
 - withId - a string of the unique customer id in UUID or SHA256 format
 
-```
+```csharp
 NamiCustomerManager.Login(customerId);
 ```
 
 ### Logout
 Disassociate a device from an external id.
 
-```
+```csharp
 NamiCustomerManager.Logout();
 ```
 
 ### IsLoggedIn
 Return if a user is currently logged into the device.
 
-```
+```csharp
 var isLoggedIn = NamiCustomerManager.IsLoggedIn;
 ```
 
@@ -180,7 +180,7 @@ Class representing the state of a customer's subscription journey.
 - InPause - (Android only) indicates if the customer's subscription is paused.
 - InAccountHold - indicates if the subscription has lapsed due to a payment failure and the granted entitlements are no longer active.
 
-```
+```csharp
 // returns the current state of a customer's subscription journey
 
 var customerJourneyState = NamiCustomerManager.JourneyState;
@@ -191,7 +191,7 @@ Manually trigger a refresh of the user's latest active entitlements from the Nam
 #### Parameters
 - refreshCallback - returns the entitlements list that can be used for processing.
 
-```
+```csharp
 NamiEntitlementManager.Refresh(RefreshCallback);
 
 void RefreshCallback(List<NamiEntitlement> entitlements)
@@ -211,7 +211,7 @@ Object that contains data about an entitlement on the Nami Platform.
 - ReferenceId - the unique id used to reference the entitlement, set in the Control Center
 - RelatedSKUs - a list of NamiSKU objects. This is the list of all known in-app purchase products that can grant this entitlement. Set in the Control Center.
 
-```
+```csharp
 // returns all active entitlements for a user on the current device
 
 var activeEntitlements = NamiEntitlementManager.Active();
@@ -223,35 +223,35 @@ Register and handle callbacks for your app logic.
 ### RegisterAvailableCampaignsHandler
 Receive a callback whenever the SDK gets back the current list of available NamiCampaign objects for the device. This list is personalized for the device by the Nami backend server based upon campaign filtering and priority rules.
 
-```
+```csharp
 NamiCampaignManager.RegisterAvailableCampaignsHandler(availableCampaignsCallback);
 ```
 
 ### RegisterAccountStateHandler
 Register a callback that will be called whenever `NamiCustomerManager.Login` or `NamiCustomerManager.Logout` is called with results from those calls.
 
-```
+```csharp
 NamiCustomerManager.RegisterAccountStateHandler(accountStateCallback);
 ```
 
 ### RegisterJourneyStateHandler
 Register a callback that will be made any time there's a change to the Journey State for the user. Note that Nami fetches journey state at the start of each session and this is the most likely time to see a change.
 
-```
+```csharp
 NamiCustomerManager.RegisterJourneyStateHandler(journeyStateCallback);
 ```
 
 ### RegisterActiveEntitlementsHandler
 Register a callback to react to a potential changes to the active entitlements for the user, whenever such state is fetched from the Nami service. This occurs during the course of the application lifecycle as well as when `NamiEntitlementManager.Refresh` is called.
 
-```
+```csharp
 NamiEntitlementManager.RegisterActiveEntitlementsHandler(activeEntitlementsCallback);
 ```
 
 ### RegisterCloseHandler
 If this registered, paywall `close` buttons will call back to this handler for your own custom business logic instead of using the system default, which is to just dismiss the paywall.
 
-```
+```csharp
 NamiPaywallManager.RegisterCloseHandler(CloseCallback);
 
 void CloseCallback()
@@ -267,7 +267,7 @@ void CloseCallback()
 ### RegisterSignInHandler
 Register a sign-in provider to handle your own sign-in logic.
 
-```
+```csharp
 NamiPaywallManager.RegisterSignInHandler(signInCallback);
 ```
 
@@ -276,20 +276,20 @@ By registering this handler, a Nami paywall will handoff to you when the user ha
 
 Once the purchase is successful, indicate it is complete by calling `NamiPaywallManager.BuySkuComplete`.
 
-```
+```csharp
 NamiPaywallManager.RegisterBuySkuHandler(buySkuCallback);
 ```
 
 ### RegisterPurchasesChangedHandler
 Register a callback that will be made anytime there is a change to purchases made on the device. This will be triggered when a purchase process is started and may have different states based on the particular store platform.
 
-```
+```csharp
 NamiPurchaseManager.RegisterPurchasesChangedHandler(purchasesChangedCallback);
 ```
 
 ### RegisterRestorePurchasesHandler
 For recommendations on where to present UI elements to your customers during a restore purchases process, see our Restoring Purchases guide.
 
-```
+```csharp
 NamiPurchaseManager.RegisterRestorePurchasesHandler(restorePurchasesCallback); // Apple only
 ```

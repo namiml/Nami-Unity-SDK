@@ -35,7 +35,7 @@ Now Nami Unity SDK should be ready to use.
 
 ## Configuration
 
-In Unity editor go to `Window` -> `Nami` -> `Edit Settings` and enter your app platform id.
+In Unity editor go to `Window` -> `Nami` -> `Edit Settings` and enter your app platform id. You can also provide it later manually in the code during the initialization.
 
 ## Usage
 

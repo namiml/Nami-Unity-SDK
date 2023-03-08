@@ -61,7 +61,7 @@ Class used to initialize the Nami Unity SDK when an app starts.
 
 ```csharp
 var appPlatformId = Application.platform == RuntimePlatform.Android ? "YOUR_ANDROID_KEY_HERE" : "YOUR_IOS_KEY_HERE";
-new NamiConfiguration.Builder(appPlatformId) // if left null or ommited it will use the key from settings
+new NamiConfiguration.Builder(appPlatformId) // if left null or omitted it will use the key from settings
     .BypassStore(false)
     .LogLevel(NamiLogLevel.Warn)
     .NamiLanguageCode(NamiLanguageCode.EN)

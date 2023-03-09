@@ -8,6 +8,10 @@ namespace NamiSDK.Implementation
     {
         // TODO Editor implementation
 
+        public void Launch()
+        {
+        }
+
         public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
         }

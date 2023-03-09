@@ -29,7 +29,11 @@ void _nm_init(char *configurationJson){
     [Nami configureWith:namiConfig];
 }
 
-void _nm_launch(char *label, void* launchCallbackPtr, void* paywallActionCallbackPtr){
+void _nm_launch(){
+    [NamiCampaignManager launch];
+}
+
+void _nm_launchWithLabel(char *label, void* launchCallbackPtr, void* paywallActionCallbackPtr){
     NSString* labelString = [NamiUtils createNSStringFrom:label];
     
     [NamiCampaignManager launchWithLabel:labelString

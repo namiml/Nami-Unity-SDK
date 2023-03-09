@@ -26,7 +26,11 @@ public class NamiBridge {
         }
     }
 
-    public static void launch(Activity context, String label, OnLaunchCampaignListener launchListener) {
+    public static void launch(Activity context) {
+        NamiCampaignManager.launch(context, "", (namiPaywallAction, sku) -> null, launchCampaignResult -> null);
+    }
+
+    public static void launchWithLabel(Activity context, String label, OnLaunchCampaignListener launchListener) {
         NamiCampaignManager.launch(context, label, (namiPaywallAction, sku) -> {
             launchListener.onNamiPaywallAction(namiPaywallAction, sku);
             return null;

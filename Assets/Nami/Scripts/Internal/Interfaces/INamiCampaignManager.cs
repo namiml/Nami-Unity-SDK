@@ -5,6 +5,7 @@ namespace NamiSDK.Interfaces
 {
 	public interface INamiCampaignManager
 	{
+		public void Launch();
 		public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null);
 		public List<NamiCampaign> AllCampaigns();
 		public void RegisterAvailableCampaignsHandler(Action<List<NamiCampaign>> availableCampaignsCallback);

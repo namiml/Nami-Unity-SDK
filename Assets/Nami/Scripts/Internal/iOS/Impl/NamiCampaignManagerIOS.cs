@@ -10,12 +10,17 @@ namespace NamiSDK.Implementation
 {
     public class NamiCampaignManagerIOS : INamiCampaignManager
     {
+        public void Launch()
+        {
+            _nm_launch();
+        }
+
         public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
             var onLaunchCallback = launchHandler?.OnLaunchCallback;
             var onPaywallActionCallback = paywallActionHandler?.OnPaywallActionCallback;
             
-            _nm_launch(label,
+            _nm_launchWithLabel(label,
                 onLaunchCallback == null ? IntPtr.Zero : Callbacks.New(data =>
                 {
                     bool success = false;
@@ -101,7 +106,10 @@ namespace NamiSDK.Implementation
         }
 
         [DllImport("__Internal")]
-        private static extern void _nm_launch(string label, IntPtr launchCallbackPtr, IntPtr paywallActionCallbackPtr);
+        private static extern void _nm_launch();
+
+        [DllImport("__Internal")]
+        private static extern void _nm_launchWithLabel(string label, IntPtr launchCallbackPtr, IntPtr paywallActionCallbackPtr);
 
         [DllImport("__Internal")]
         private static extern string _nm_allCampaigns();

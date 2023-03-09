@@ -20,6 +20,11 @@ namespace NamiSDK
 #endif
         }
 
+        public static void Launch()
+        {
+            Impl.Launch();
+        }
+
         public static void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
             Impl.Launch(label, launchHandler, paywallActionHandler);

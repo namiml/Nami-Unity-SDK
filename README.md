@@ -78,6 +78,12 @@ Launch a live campaign in your app and show the associated paywall.
 - paywallActionHandler - use this to monitor user interactions with the paywall raised by this campaign launch. 
 
 ```csharp
+NamiCampaignManager.Launch();
+```
+
+Label example:
+
+```csharp
 NamiCampaignManager.Launch(label);
 ```
 

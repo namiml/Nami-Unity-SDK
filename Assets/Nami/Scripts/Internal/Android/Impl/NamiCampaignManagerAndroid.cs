@@ -19,12 +19,20 @@ namespace NamiSDK.Implementation
             JavaClassNames.NamiBridge.AJCCallStaticOnce("registerCampaignHandler", registerListenerProxy);
         }
 
+        public void Launch()
+        {
+            JniToolkitUtils.RunOnUiThread(() =>
+            {
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity, "", null);
+            });
+        }
+
         public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
             JniToolkitUtils.RunOnUiThread(() =>
             {
                 var launchListener = new OnLaunchCampaignListenerProxy(launchHandler, paywallActionHandler);
-                JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity, label, launchListener);
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("launchWithLabel", JniToolkitUtils.Activity, label, launchListener);
             });
         }
 

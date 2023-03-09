@@ -23,7 +23,7 @@ namespace NamiSDK.Implementation
         {
             JniToolkitUtils.RunOnUiThread(() =>
             {
-                JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity, "", null);
+                JavaClassNames.NamiBridge.AJCCallStaticOnce("launch", JniToolkitUtils.Activity);
             });
         }
 

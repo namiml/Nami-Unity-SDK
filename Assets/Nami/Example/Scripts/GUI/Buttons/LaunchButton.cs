@@ -34,7 +34,7 @@ namespace NamiExample
             {
                 Debug.Log("(Android only) ------------> " + label + " purchase changed callback:" +
                           "\nPurchaseState: " + purchaseState +
-                          "\nActivePurchases Count: " + activePurchases.Count + 
+                          "\nActivePurchases Count: " + activePurchases?.Count + 
                           "\nErrorMsg: " + errorMsg);
             });
 
@@ -42,9 +42,9 @@ namespace NamiExample
             {
                 Debug.Log("------------> " + label + " paywall action callback:" +
                           "\nNamiPaywallAction: " + namiPaywallAction +
-                          "\nSKU Name: " + sku.Name + 
+                          "\nSKU Name: " + sku?.Name + 
                           "\n(iOS only) ErrorMsg: " + errorMsg +
-                          "\n(iOS only) Purchases Count: " + purchases.Count
+                          "\n(iOS only) Purchases Count: " + purchases?.Count
                           );
             });
 

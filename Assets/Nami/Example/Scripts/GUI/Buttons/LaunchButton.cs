@@ -18,7 +18,37 @@ namespace NamiExample
 
         private void OnClick()
         {
-            NamiCampaignManager.Launch(label);
+            if (string.IsNullOrEmpty(label))
+            {
+                NamiCampaignManager.Launch();
+                return;
+            }
+
+            var launchHandler = new LaunchHandler(() =>
+            {
+                Debug.Log("------------> " + label + " launch success!");
+            }, errorMsg =>
+            {
+                Debug.Log("------------> " + label + " launch failure!\n" + errorMsg);
+            }, (purchaseState, activePurchases, errorMsg) =>
+            {
+                Debug.Log("(Android only) ------------> " + label + " purchase changed callback:" +
+                          "\nPurchaseState: " + purchaseState +
+                          "\nActivePurchases Count: " + activePurchases.Count + 
+                          "\nErrorMsg: " + errorMsg);
+            });
+
+            var paywallActionHandler = new PaywallActionHandler((namiPaywallAction, sku, errorMsg, purchases) =>
+            {
+                Debug.Log("------------> " + label + " paywall action callback:" +
+                          "\nNamiPaywallAction: " + namiPaywallAction +
+                          "\nSKU Name: " + sku.Name + 
+                          "\n(iOS only) ErrorMsg: " + errorMsg +
+                          "\n(iOS only) Purchases Count: " + purchases.Count
+                          );
+            });
+
+            NamiCampaignManager.Launch(label, launchHandler, paywallActionHandler);
         }
     }
 }

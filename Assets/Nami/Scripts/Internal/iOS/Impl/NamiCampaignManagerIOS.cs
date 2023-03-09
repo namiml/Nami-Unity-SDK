@@ -17,11 +17,12 @@ namespace NamiSDK.Implementation
 
         public void Launch(string label, LaunchHandler launchHandler = null, PaywallActionHandler paywallActionHandler = null)
         {
-            var onLaunchCallback = launchHandler?.OnLaunchCallback;
+            var onLaunchSuccessCallback = launchHandler?.OnSuccessCallback;
+            var onLaunchFailureCallback = launchHandler?.OnFailureCallback;
             var onPaywallActionCallback = paywallActionHandler?.OnPaywallActionCallback;
             
             _nm_launchWithLabel(label,
-                onLaunchCallback == null ? IntPtr.Zero : Callbacks.New(data =>
+                onLaunchSuccessCallback == null && onLaunchFailureCallback == null ? IntPtr.Zero : Callbacks.New(data =>
                 {
                     bool success = false;
                     string error = null;
@@ -36,7 +37,14 @@ namespace NamiSDK.Implementation
                         error = (string)errorObject;
                     }
 
-                    onLaunchCallback.Invoke(success, error);
+                    if (success)
+                    {
+                        onLaunchSuccessCallback?.Invoke();
+                    }
+                    else
+                    {
+                        onLaunchFailureCallback?.Invoke(error);
+                    }
                 }),
                 onPaywallActionCallback == null ? IntPtr.Zero : Callbacks.New(data =>
                 {

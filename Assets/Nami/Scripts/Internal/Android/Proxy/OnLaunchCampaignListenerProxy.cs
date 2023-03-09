@@ -9,20 +9,11 @@ namespace NamiSDK.Proxy
 {
     public class OnLaunchCampaignListenerProxy : AndroidJavaProxy
     {
-        private readonly Action<NamiPaywallAction, NamiSKU> _paywallActionCallback;
+        private readonly Action<NamiPaywallAction, NamiSKU, string, List<NamiPurchase>> _paywallActionCallback;
         private readonly Action _onLaunchSuccessCallback;
-        private readonly Action<LaunchCampaignError> _onLaunchFailureCallback;
+        private readonly Action<string> _onLaunchFailureCallback;
         private readonly Action<NamiPurchaseState, List<NamiPurchase>, string> _onLaunchPurchaseChangedCallback;
 
-        public OnLaunchCampaignListenerProxy(Action<NamiPaywallAction, NamiSKU> paywallActionCallback, Action onLaunchSuccessCallback, Action<LaunchCampaignError> onLaunchFailureCallback, Action<NamiPurchaseState, List<NamiPurchase>, string> onLaunchPurchaseChangedCallback) : base("com.namiml.unity.OnLaunchCampaignListener")
-        {
-            _paywallActionCallback = paywallActionCallback;
-            _onLaunchSuccessCallback = onLaunchSuccessCallback;
-            _onLaunchFailureCallback = onLaunchFailureCallback;
-            _onLaunchPurchaseChangedCallback = onLaunchPurchaseChangedCallback;
-        }
-
-#if UNITY_ANDROID
         public OnLaunchCampaignListenerProxy(LaunchHandler launchHandler, PaywallActionHandler paywallActionHandler) : base("com.namiml.unity.OnLaunchCampaignListener")
         {
             if (launchHandler != null)
@@ -36,7 +27,6 @@ namespace NamiSDK.Proxy
                 _paywallActionCallback = paywallActionHandler.OnPaywallActionCallback;
             }
         }
-#endif
 
         [UsedImplicitly]
         void onNamiPaywallAction(AndroidJavaObject namiPaywallAction, AndroidJavaObject sku)
@@ -44,7 +34,7 @@ namespace NamiSDK.Proxy
             if (_paywallActionCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _paywallActionCallback(namiPaywallAction.JavaToEnum<NamiPaywallAction>("NAMI", "_"), sku == null ? null : new NamiSKU(sku));
+                _paywallActionCallback(namiPaywallAction.JavaToEnum<NamiPaywallAction>("NAMI", "_"), sku == null ? null : new NamiSKU(sku), null, null);
             });
         }
 
@@ -64,7 +54,7 @@ namespace NamiSDK.Proxy
             if (_onLaunchFailureCallback == null) return;
             NamiHelper.Queue(() =>
             {
-                _onLaunchFailureCallback(error.JavaToEnum<LaunchCampaignError>("_"));
+                _onLaunchFailureCallback(error.JavaToString());
             });
         }
 

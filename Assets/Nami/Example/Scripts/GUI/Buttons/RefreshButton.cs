@@ -13,7 +13,7 @@ namespace NamiExample
 
         public UnityEvent<List<NamiEntitlement>> onEntitlementRefreshed = new UnityEvent<List<NamiEntitlement>>();
 
-        private void Start()
+        private void Awake()
         {
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);

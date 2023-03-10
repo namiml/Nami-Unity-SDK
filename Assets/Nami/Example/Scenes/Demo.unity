@@ -1101,6 +1101,7 @@ GameObject:
   - component: {fileID: 293606442}
   - component: {fileID: 293606441}
   - component: {fileID: 293606440}
+  - component: {fileID: 293606443}
   m_Layer: 5
   m_Name: Scroll View Commands
   m_TagString: Untagged
@@ -1197,6 +1198,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293606438}
   m_CullTransparentMesh: 1
+--- !u!114 &293606443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293606438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb955bf91ded4130bf5c9c3d4c2aca9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commandButtonInstance: {fileID: 602124485}
 --- !u!1 &312730873
 GameObject:
   m_ObjectHideFlags: 0
@@ -2856,7 +2870,7 @@ GameObject:
   - component: {fileID: 602124486}
   - component: {fileID: 602124485}
   m_Layer: 5
-  m_Name: Button_Default
+  m_Name: Button_Command
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2891,10 +2905,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 602124483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13383115d7fe437690021634df76e8f8, type: 3}
+  m_Script: {fileID: 11500000, guid: dd1f1084526e468ca0c3d315efd1b1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: 
+  text: {fileID: 1034814801}
 --- !u!114 &602124486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,7 +2966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  m_Color: {r: 1, g: 0.9734, b: 0.93, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

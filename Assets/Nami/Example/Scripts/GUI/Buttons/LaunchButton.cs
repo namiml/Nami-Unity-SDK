@@ -10,7 +10,7 @@ namespace NamiExample
         private Button button;
         [SerializeField] private string label;
 
-        private void Start()
+        private void Awake()
         {
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);

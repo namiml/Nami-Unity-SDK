@@ -16,13 +16,15 @@ namespace NamiExample
 
         private readonly string uuid = Guid.NewGuid().ToString();
 
-        private void Start()
+        private void Awake()
         {
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);
-            
+        }
+
+        private void Start()
+        {
             NamiCustomerManager.RegisterAccountStateHandler(UpdateAccountState);
-            UpdateLoginState(NamiCustomerManager.IsLoggedIn);
         }
 
         private void OnClick()

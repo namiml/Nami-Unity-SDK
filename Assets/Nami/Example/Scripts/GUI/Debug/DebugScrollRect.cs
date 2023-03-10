@@ -10,6 +10,7 @@ namespace NamiExample
         private ScrollRect scrollRect;
 
         [SerializeField] private Text logText;
+        private const int logMax = 2500;
 
         private void Awake()
         {
@@ -32,7 +33,9 @@ namespace NamiExample
                 log += "\n" + stackTrace;
             }
 
-            logText.text += log + "\n\n";
+            log = logText.text + log + "\n\n";
+            log = log.Substring(Mathf.Max(0, log.Length - logMax));
+            logText.text = log;
 
             ScrollDown();
         }

@@ -25,6 +25,7 @@ namespace NamiExample
         private void Start()
         {
             NamiCustomerManager.RegisterAccountStateHandler(UpdateAccountState);
+            UpdateLoginState(NamiCustomerManager.IsLoggedIn);
         }
 
         private void OnClick()

@@ -8,32 +8,45 @@ namespace NamiExample
     [Serializable]
     public class Tab
     {
-        public GameObject targetObject;
-        public Button button;
+        [SerializeField] private GameObject targetObject;
+
+        [SerializeField] private Button button;
         private CanvasGroup buttonCanvasGroup;
 
         private const float openStateAlpha = 1.0f;
         private const float closeStateAlpha = 0.4f;
 
-        public void Init(Action<Tab> switchAction)
+        public void Init(Action onClick)
         {
-            if (button == null) return;
-            buttonCanvasGroup = button.GetComponent<CanvasGroup>();
+            if (onClick == null || targetObject == null || button == null)
+            {
+                return;
+            }
 
-            if (switchAction == null) return;
-            button.onClick.AddListener(() => switchAction.Invoke(this));
+            buttonCanvasGroup = button.GetComponent<CanvasGroup>();
+            button.onClick.AddListener(onClick.Invoke);
         }
 
         public void Open()
         {
-            if (buttonCanvasGroup != null) buttonCanvasGroup.alpha = openStateAlpha;
-            if (targetObject != null) targetObject.SetActive(true);
+            if (buttonCanvasGroup == null || targetObject == null)
+            {
+                return;
+            }
+
+            buttonCanvasGroup.alpha = openStateAlpha; 
+            targetObject.SetActive(true);
         }
 
         public void Close()
         {
-            if (buttonCanvasGroup != null) buttonCanvasGroup.alpha = closeStateAlpha;
-            if (targetObject != null) targetObject.SetActive(false);
+            if (buttonCanvasGroup == null || targetObject == null)
+            {
+                return;
+            }
+
+            buttonCanvasGroup.alpha = closeStateAlpha; 
+            targetObject.SetActive(false);
         }
     }
 
@@ -43,12 +56,21 @@ namespace NamiExample
 
         private void Start()
         {
-            foreach (var tab in tabs) tab.Init(SwitchTabs);
+            foreach (var tab in tabs)
+            {
+                tab.Init(() => SwitchTab(tab));
+            }
+
+            SwitchTab(tabs[0]);
         }
 
-        private void SwitchTabs(Tab tabToOpen)
+        private void SwitchTab(Tab tabToOpen)
         {
-            foreach (var tab in tabs) tab.Close();
+            foreach (var tab in tabs)
+            {
+                tab.Close();
+            }
+
             tabToOpen.Open();
         }
     }

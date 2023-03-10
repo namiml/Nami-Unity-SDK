@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,7 +39,18 @@ namespace NamiExample
 
         private void ScrollDown()
         {
-            scrollRect.normalizedPosition = Vector2.zero;
+            if (!scrollRect.gameObject.activeInHierarchy)
+            {
+                return;
+            }
+
+            StartCoroutine(ScrollOnEndOfFrame(Vector2.zero));
+        }
+
+        private IEnumerator ScrollOnEndOfFrame(Vector2 normalizedPosition)
+        {
+            yield return new WaitForEndOfFrame();
+            scrollRect.normalizedPosition = normalizedPosition;
         }
     }
 }

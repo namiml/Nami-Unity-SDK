@@ -18,11 +18,13 @@ namespace NamiExample
         private void Start()
         {
             NamiEntitlementManager.RegisterActiveEntitlementsHandler(UpdateEntitlements);
-            UpdateEntitlements(NamiEntitlementManager.Active());
         }
 
         public void UpdateEntitlements(List<NamiEntitlement> entitlements)
         {
+            Debug.Log("ActiveEntitlements callback received" +
+                      "\nNamiEntitlements Count: " + entitlements?.Count);
+
             foreach (var card in cardPool)
             {
                 card.SetActive(false);

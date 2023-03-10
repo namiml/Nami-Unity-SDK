@@ -20,11 +20,20 @@ namespace NamiExample
         private void Start()
         {
             NamiCustomerManager.RegisterJourneyStateHandler(UpdateJourneyState);
-            UpdateJourneyState(NamiCustomerManager.JourneyState);
         }
 
         private void UpdateJourneyState(CustomerJourneyState journeyState)
         {
+            Debug.Log("JourneyState callback received" +
+                      "\nJourneyState: " + 
+                      "\n> FormerSubscriber: " + journeyState?.FormerSubscriber +
+                      "\n> InGracePeriod: " + journeyState?.InGracePeriod +
+                      "\n> InTrialPeriod: " + journeyState?.InTrialPeriod +
+                      "\n> InIntroOfferPeriod: " + journeyState?.InIntroOfferPeriod +
+                      "\n> IsCancelled: " + journeyState?.IsCancelled +
+                      "\n> (Android only) InPause: " + journeyState?.InPause +
+                      "\n> InAccountHold: " + journeyState?.InAccountHold);
+
             if (journeyState == null) return;
 
             SetStateImageColor(inTrialPeriodStateImages, journeyState.InTrialPeriod);

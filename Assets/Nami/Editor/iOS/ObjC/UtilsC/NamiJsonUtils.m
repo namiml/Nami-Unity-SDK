@@ -135,7 +135,7 @@
     dictionary[@"skuId"] = [purchase skuId];
     dictionary[@"transactionIdentifier"] = [purchase transactionIdentifier];
     dictionary[@"sku"] = [self serializeNamiSKU:[purchase sku]];
-    dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]];
+    // dictionary[@"entitlementsGranted"] = [self serializeNamiEntitlementArray:[purchase entitlementsGranted]]; TODO
     dictionary[@"transaction"] = [purchase transactionIdentifier];
     return dictionary;
 }

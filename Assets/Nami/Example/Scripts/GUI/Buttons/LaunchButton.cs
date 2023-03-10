@@ -20,19 +20,20 @@ namespace NamiExample
         {
             if (string.IsNullOrEmpty(label))
             {
+                Debug.Log("Campaign launched without label");
                 NamiCampaignManager.Launch();
                 return;
             }
 
             var launchHandler = new LaunchHandler(() =>
             {
-                Debug.Log("------------> " + label + " launch success!");
+                Debug.Log(label + " launch success");
             }, errorMsg =>
             {
-                Debug.Log("------------> " + label + " launch failure!\n" + errorMsg);
+                Debug.LogWarning(label + " launch failure\n" + errorMsg);
             }, (purchaseState, activePurchases, errorMsg) =>
             {
-                Debug.Log("(Android only) ------------> " + label + " purchase changed callback:" +
+                Debug.Log("(Android only) " + label + " purchase changed callback:" +
                           "\nPurchaseState: " + purchaseState +
                           "\nActivePurchases Count: " + activePurchases?.Count + 
                           "\nErrorMsg: " + errorMsg);
@@ -40,7 +41,7 @@ namespace NamiExample
 
             var paywallActionHandler = new PaywallActionHandler((namiPaywallAction, sku, errorMsg, purchases) =>
             {
-                Debug.Log("------------> " + label + " paywall action callback:" +
+                Debug.Log(label + " paywall action callback:" +
                           "\nNamiPaywallAction: " + namiPaywallAction +
                           "\nSKU Name: " + sku?.Name + 
                           "\n(iOS only) ErrorMsg: " + errorMsg +
@@ -48,6 +49,7 @@ namespace NamiExample
                           );
             });
 
+            Debug.Log("Campaign launched with label " + label);
             NamiCampaignManager.Launch(label, launchHandler, paywallActionHandler);
         }
     }

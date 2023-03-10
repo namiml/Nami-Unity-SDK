@@ -21,12 +21,15 @@ namespace NamiExample
 
         private void OnClick()
         {
+            Debug.Log("Refresh button clicked");
             NamiEntitlementManager.Refresh(OnEntitlementRefreshed);
             button.interactable = false;
         }
 
         private void OnEntitlementRefreshed(List<NamiEntitlement> namiEntitlements)
         {
+            Debug.Log("Refresh callback received" +
+                      "\nNamiEntitlements Count: " + namiEntitlements?.Count);
             onEntitlementRefreshed.Invoke(namiEntitlements);
             button.interactable = true;
         }

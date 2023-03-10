@@ -27,12 +27,16 @@ namespace NamiExample
 
         private void OnClick()
         {
+            Debug.Log(text.text + "button clicked");
             if (NamiCustomerManager.IsLoggedIn)
             {
+                Debug.Log("Logout is processing");
                 NamiCustomerManager.Logout();
             }
             else
             {
+                Debug.Log("Login is processing" + 
+                          "\nwithId: " + uuid);
                 NamiCustomerManager.Login(uuid);
             }
 
@@ -41,6 +45,10 @@ namespace NamiExample
 
         private void UpdateAccountState(AccountStateAction accountState, bool success, string error)
         {
+            Debug.Log("Account state callback received" +
+                      "\nAccountState: " + accountState +
+                      "\nSuccess: " + success +
+                      "\nError: " + error);
             UpdateLoginState(accountState == AccountStateAction.Login);
         }
 
@@ -48,6 +56,9 @@ namespace NamiExample
         {
             text.text = isLoggedIn ? logoutText : loginText;
             button.interactable = true;
+
+            Debug.Log("Login state changed" +
+                      "\nisLoggedIn: " + isLoggedIn);
         }
     }
 }

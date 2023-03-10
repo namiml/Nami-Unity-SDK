@@ -87,39 +87,24 @@ Label example:
 NamiCampaignManager.Launch(label);
 ```
 
-Callback handlers example for Android platforms:
+Callback handlers example:
 
 ```csharp
 var launchHandler = new LaunchHandler(() =>
 {
     // on success
-}, error =>
+}, errorMsg =>
 {
     // on failure
 }, (purchaseState, activePurchases, errorMsg) =>
 {
-    // on purchase changed
-});
-
-var paywallActionHandler = new PaywallActionHandler((namiPaywallAction, sku) =>
-{
-    // on patwall action
-});
-            
-NamiCampaignManager.Launch(label, launchHandler, paywallActionHandler);
-```
-
-Callback handlers example for iOS platforms:
-
-```csharp
-var launchHandler = new LaunchHandler((isSuccess, errorMsg) =>
-{
-    // on launch
+    // on purchase changed - for Android only, won't be called on iOS platforms
 });
 
 var paywallActionHandler = new PaywallActionHandler((namiPaywallAction, sku, errorMsg, purchases) =>
 {
-    // on patwall action
+    // on paywall action
+    // errorMsg, purchases - for iOS only, will always return null on Android platforms
 });
 
 NamiCampaignManager.Launch(label, launchHandler, paywallActionHandler);

@@ -246,8 +246,7 @@ void _nm_registerSignInHandler(void* signInCallbackPtr){
 }
 
 void _nm_registerBuySkuHandler(void* buySkuCallbackPtr){
-    [NamiPaywallManager registerBuySkuHandler:^(UIViewController * paywall, NamiSKU * sku) {
-        
+    [NamiPaywallManager registerBuySkuHandler:^(NamiSKU * sku) {
         if (StringCallback == NULL || buySkuCallbackPtr == NULL){
             return;
         }

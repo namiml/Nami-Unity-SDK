@@ -23,14 +23,12 @@ namespace NamiSDK
                 dictionary.TryGetValue("rule", out var ruleObject);
                 dictionary.TryGetValue("paywall", out var paywallObject);
                 dictionary.TryGetValue("segment", out var segmentObject);
-                dictionary.TryGetValue("type", out var typeObject);
                 dictionary.TryGetValue("value", out var valueObject);
 
                 Id = (string)idObject;
                 Rule = (string)ruleObject;
                 Paywall = (string)paywallObject;
                 Segment = (string)segmentObject;
-                if (typeObject != null) Type = (NamiCampaignRuleType)(long)typeObject;
                 Value = (string)valueObject;
             }
         }

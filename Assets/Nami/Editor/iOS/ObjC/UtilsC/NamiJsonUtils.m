@@ -157,13 +157,11 @@
         return NULL;
     }
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
-    // dictionary[@"id"] = [campaign id];
-    // dictionary[@"rule"] = @("");
-    // dictionary[@"paywall"] = @("");
-    // dictionary[@"segment"] = @("");
-    // dictionary[@"type"] = @("");
-    // dictionary[@"value"] = @("");
-    // TODO
+    dictionary[@"id"] = [campaign id];
+    dictionary[@"rule"] = [campaign rule];
+    dictionary[@"paywall"] = [campaign paywall];
+    dictionary[@"segment"] = [campaign segment];
+    dictionary[@"value"] = [campaign value];
     return dictionary;
 }
 

@@ -30,6 +30,8 @@ namespace NamiSDK
 
         public class Builder
         {
+            private const string ExtendedClientInfo = "extendedClientInfo:unity:" + NamiSDKSettings.Version;
+
             private string appPlatformId = null;
             private NamiLogLevel logLevel = Application.platform == RuntimePlatform.Android ? NamiLogLevel.Warn : NamiLogLevel.Error;
             private bool bypassStore = false;
@@ -91,6 +93,7 @@ namespace NamiSDK
 
             public NamiConfiguration Build()
             {
+                settingsList.Add(ExtendedClientInfo);
                 return new NamiConfiguration(appPlatformId, logLevel, bypassStore, fullScreenPresentation, developmentMode, namiLanguageCode, settingsList);
             }
         }

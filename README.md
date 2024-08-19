@@ -39,7 +39,7 @@ Unity 2020.3.44f1+
 
 ## Installation
 
-1. Install the package `https://github.com/NinevaStudios/com.nami.sdk.git` via the [Unity Package Manager using a Git URL](https://docs.unity3d.com/Manual/upm-ui-giturl.html).
+1. Install the package `https://github.com/namiml/com.nami.sdk.git` via the [Unity Package Manager using a Git URL](https://docs.unity3d.com/Manual/upm-ui-giturl.html).
 2. (Android only) Enable `Custom Main Gradle Template` and `Custom Gradle Properties Template` in Project Settings -> Player -> Publishing Settings.
 3. Setup [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) and run resolver for your target platform.
 4. (Android only) In Project folder go to Plugin -> Android -> `gradleTemplate.properties` and add the property `android.useAndroidX=true` there.

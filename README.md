@@ -1,3 +1,5 @@
+![Nami SDK logo](https://cdn.namiml.com/brand/sdk/Nami-SDK@0.5x.png)
+
 # Nami Unity SDK
 
 Nami ML gives you everything you need to power your paywall, streamline subscription management, and drive revenue growth through instantly deployable paywalls, precise targeting and segmentation, and enterprise-grade security and scaleability.
